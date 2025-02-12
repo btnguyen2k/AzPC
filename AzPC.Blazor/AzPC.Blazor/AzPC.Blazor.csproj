@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- TODO: temporarily suspend error on duplicate publish output files; will be removed once the issue is resolved -->
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+
+    <UserSecretsId>fa9f8b33-d379-4187-8cbb-604ddcb434e6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.66.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AzPC.Api\AzPC.Api.csproj" />
+    <ProjectReference Include="..\AzPC.Blazor.Client\AzPC.Blazor.Client.csproj" />
+    <ProjectReference Include="..\AzPC.Blazor.App\AzPC.Blazor.App.csproj" />
+    <ProjectReference Include="..\..\AzPC.Libs\AzPC.Libs.csproj" />
+  </ItemGroup>
+
+  <!-- Prevents duplicated files from other projects from being copied to the output directory -->
+  <!-- <ItemGroup>
+    <Content Include="..\..\AzPC.Api\appsettings.json">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Remove="..\..\AzPC.Api\appsettings.json;..\..\AzPC.Api\appsettings.Development.json" />
+    <None Remove="..\..\AzPC.Api\appsettings.json;..\..\AzPC.Api\appsettings.Development.json" />
+    <Compile Remove="..\..\AzPC.Api\appsettings.json;..\..\AzPC.Api\appsettings.Development.json" />
+    <EmbeddedResource Remove="..\..\AzPC.Api\appsettings.json;..\..\AzPC.Api\appsettings.Development.json" />
+  </ItemGroup> -->
+
+  <!-- Prevent other development setting files from being copied to the output directory -->
+  <!-- <ItemGroup>
+    <Content Update="..\AzPC.Blazor.Client\wwwroot\appsettings.Development.json;appsettings.Development.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup> -->
+</Project>

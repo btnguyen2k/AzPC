@@ -1,0 +1,6 @@
+@AzPC.Api_HostAddress = http://localhost:5031
+
+GET {{AzPC.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
