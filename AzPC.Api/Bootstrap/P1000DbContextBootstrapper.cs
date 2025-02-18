@@ -22,8 +22,8 @@ public class DbContextBootstrapper
 		ConfigureDbContext<IApplicationRepository, ApplicationDbContextRepository>(appBuilder, "Databases:Application", logger);
 		ConfigureDbContext<IIdentityRepository, IdentityDbContextRepository>(appBuilder, "Databases:Identity", logger);
 
-		appBuilder.Services.AddHostedService<ApplicationInitializer>();
-		appBuilder.Services.AddHostedService<IdentityInitializer>();
+		// appBuilder.Services.AddHostedService<ApplicationInitializer>();
+		// appBuilder.Services.AddHostedService<IdentityInitializer>();
 	}
 
 	private static void ConfigureDbContext<TContextService, TContextImplementation>(

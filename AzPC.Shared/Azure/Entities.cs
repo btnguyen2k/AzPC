@@ -2,10 +2,17 @@ using System.Text.Json.Serialization;
 
 namespace AzPC.Shared.Azure;
 
-public struct PriceItem
+public class AzureRegion
+{
+	public string Name { get; set; } = default!;
+	public string DisplayName { get; set; } = default!;
+	public string RegionType { get; set; } = default!;
+}
+
+public class PriceItem
 {
 	[JsonPropertyName("currencyCode")]
-	public string CurrencyCode { get; set; }
+	public string CurrencyCode { get; set; } = default!;
 
 	[JsonPropertyName("tierMinimumUnits")]
 	public double TierMinimumUnits { get; set; }
@@ -17,52 +24,52 @@ public struct PriceItem
 	public double UnitPrice { get; set; }
 
 	[JsonPropertyName("armRegionName")]
-	public string ArmRegionName { get; set; }
+	public string ArmRegionName { get; set; } = default!;
 
 	[JsonPropertyName("location")]
-	public string Location { get; set; }
+	public string Location { get; set; } = default!;
 
 	[JsonPropertyName("effectiveStartDate")]
 	public DateTimeOffset EffectiveStartDate { get; set; }
 
 	[JsonPropertyName("meterId")]
-	public string MeterId { get; set; }
+	public string MeterId { get; set; } = default!;
 
 	[JsonPropertyName("meterName")]
-	public string MeterName { get; set; }
+	public string MeterName { get; set; } = default!;
 
 	[JsonPropertyName("productId")]
-	public string ProductId { get; set; }
+	public string ProductId { get; set; } = default!;
 
 	[JsonPropertyName("skuId")]
-	public string SkuId { get; set; }
+	public string SkuId { get; set; } = default!;
 
 	[JsonPropertyName("productName")]
-	public string ProductName { get; set; }
+	public string ProductName { get; set; } = default!;
 
 	[JsonPropertyName("skuName")]
-	public string SkuName { get; set; }
+	public string SkuName { get; set; } = default!;
 
 	[JsonPropertyName("serviceName")]
-	public string ServiceName { get; set; }
+	public string ServiceName { get; set; } = default!;
 
 	[JsonPropertyName("serviceId")]
-	public string ServiceId { get; set; }
+	public string ServiceId { get; set; } = default!;
 
 	[JsonPropertyName("serviceFamily")]
-	public string ServiceFamily { get; set; }
+	public string ServiceFamily { get; set; } = default!;
 
 	[JsonPropertyName("unitOfMeasure")]
-	public string UnitOfMeasure { get; set; }
+	public string UnitOfMeasure { get; set; } = default!;
 
 	[JsonPropertyName("type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = default!;
 
 	[JsonPropertyName("isPrimaryMeterRegion")]
 	public bool IsPrimaryMeterRegion { get; set; }
 
 	[JsonPropertyName("armSkuName")]
-	public string ArmSkuName { get; set; }
+	public string ArmSkuName { get; set; } = default!;
 }
 
 public struct RetailPriceResp
