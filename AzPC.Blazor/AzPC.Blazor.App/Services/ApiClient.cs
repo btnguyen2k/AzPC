@@ -1,4 +1,5 @@
 ﻿using AzPC.Shared.Api;
+using AzPC.Shared.Azure;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -413,16 +414,16 @@ public class ApiClient : IApiClient
 
 	/*----------------------------------------------------------------------*/
 
-	/* FOR DEMO PURPOSES ONLY! */
-	public async Task<ApiResp<IEnumerable<UserResp>>> GetSeedUsersAsync(string? baseUrl = default, HttpClient? requestHttpClient = default, CancellationToken cancellationToken = default)
+	/// <inheritdoc/>
+	public async Task<ApiResp<List<AzureRegion>>> GetAzureRegionsAsync(string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default)
 	{
 		var httpResult = await BuildAndSendRequestAsync(
-			requestHttpClient,
-			HttpMethod.Get, baseUrl, "/api/demo/seed_users",
-			NoAuth,
+			httpClient,
+			HttpMethod.Get, baseUrl, IApiClient.API_ENDPOINT_AZURE_REGIONS,
+			authToken,
 			NoData,
 			cancellationToken
 		);
-		return await ReadResponseAsync<IEnumerable<UserResp>>(httpResult, cancellationToken);
+		return await ReadResponseAsync<List<AzureRegion>>(httpResult, cancellationToken);
 	}
 }

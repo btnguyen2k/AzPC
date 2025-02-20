@@ -1,14 +1,11 @@
-﻿using System.Text.Json;
-using AzPC.Blazor.App.Helpers;
+﻿using AzPC.Blazor.App.Helpers;
 using AzPC.Blazor.App.Services;
 using AzPC.Blazor.App.Shared;
 using AzPC.Shared.Api;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace AzPC.Blazor.App.Pages;
 
@@ -45,28 +42,6 @@ public partial class Login : BaseComponent
 		AlertType = type;
 		AlertMessage = message;
 		StateHasChanged();
-	}
-
-	[Inject]
-	private ILogger<Login> Logger { get; set; } = default!;
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		await base.OnAfterRenderAsync(firstRender);
-		// FIXME: NOT TO USE THIS IN PRODUCTION!
-		// for demo purpose: automatically fill the login form
-		// if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
-		if (firstRender && HostEnvironment.Equals(EnvironmentName.Development, StringComparison.InvariantCultureIgnoreCase))
-		{
-			Logger.LogCritical("DevMode - automatically fill the login form. DO NOT USE THIS IN PRODUCTION!");
-			var seedUsers = await ApiClient.GetSeedUsersAsync(ApiBaseUrl);
-			Logger.LogCritical("Seed users: {users}", JsonSerializer.Serialize(seedUsers));
-			var user = seedUsers.Data?.FirstOrDefault();
-			Email = user?.Email ?? string.Empty;
-			Password = user?.Password ?? string.Empty;
-
-			ShowAlert("info", "DevMode: Automatically fill login info.");
-		}
 	}
 
 	protected override async Task OnInitializedAsync()

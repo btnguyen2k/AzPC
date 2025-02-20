@@ -1,0 +1,88 @@
+@using AzPC.Blazor.App.Layout
+@using AzPC.Blazor.App.Shared
+@using AzPC.Shared.Identity
+@using Microsoft.AspNetCore.Components.WebAssembly
+
+@attribute [Route(UIGlobals.ROUTE_AZURE_REGIONS)]
+@inherits BaseComponent
+
+<SectionContent SectionId="MainLayout.Breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="@UIGlobals.ROUTE_HOME">Home</a>
+    </li>
+    <li class="breadcrumb-item active">
+        <span>@PAGE_TITLE</span>
+    </li>
+</SectionContent>
+
+<AuthorizeView>
+    <Authorizing>
+        <AuthorizingView PageTitle="@($"{PAGE_TITLE} | {AppInfo?.Name} v{AppInfo?.Version} - Authorizing...")" />
+    </Authorizing>
+    <NotAuthorized>
+        <NotAuthorizedView PageTitle="@($"{PAGE_TITLE} | {AppInfo?.Name} v{AppInfo?.Version} - Not Authorized")" LoginUrl="@LoginUrl" />
+    </NotAuthorized>
+    <Authorized>
+		<PageTitle>@PAGE_TITLE | @AppInfo?.Name v@(AppInfo?.Version)</PageTitle>
+        <div class="container-lg px-4">
+            <div class="card border-top-3 mb-4">
+                <div class="card-header">
+                    <h4 class="card-title">@PAGE_TITLE</h4>
+                </div>
+                <div class="card-body">
+					@if (!string.IsNullOrEmpty(AlertMessage))
+					{
+						<CAlert type="@AlertType">
+							@AlertMessage
+						</CAlert>
+					}
+                    @if (RegionList != null && !HideUI)
+                    {
+                        <table class="table table-sm table-bordered border-primary table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col" class="text-center">Type</th>
+                                    <th scope="col" class="text-center">Name</th>
+									<th scope="col" class="text-center">DisplayName</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+							@if (RegionList.Count() == 0)
+							{
+								<tbody>
+									<tr>
+										<td colspan="7" class="text-center">No data.</td>
+									</tr>
+								</tbody>
+							}
+							else
+							{
+								<tbody>
+									@foreach (var item in RegionList)
+									{
+										<tr>
+											<th scope="row" class="text-center">@(++RegionIndex)</th>
+											<td>@item.Name</td>
+											<td>@item.RegionType</td>
+											<td>@item.DisplayName</td>
+											<td class="text-center">
+												<button class="btn btn-sm btn-outline-primary" @onclick="(()=>BtnClickInfo(item.Name))">
+													<CIcon icon="cil-info" />
+												</button>
+											</td>
+										</tr>
+									}
+								</tbody>
+							}
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private const string PAGE_TITLE = "Regions";
+}
