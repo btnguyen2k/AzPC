@@ -1,6 +1,7 @@
 @using AzPC.Blazor.App.Layout
 @using AzPC.Blazor.App.Shared
 @using AzPC.Shared.Identity
+@using System.Text.Json
 @using Microsoft.AspNetCore.Components.WebAssembly
 
 @attribute [Route(UIGlobals.ROUTE_AZURE_REGIONS)]
@@ -42,9 +43,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">#</th>
-                                    <th scope="col" class="text-center">Type</th>
+                                    <th scope="col" class="text-center">Location</th>
                                     <th scope="col" class="text-center">Name</th>
 									<th scope="col" class="text-center">DisplayName</th>
+									<th scope="col" class="text-center">Type</th>
+									<th scope="col" class="text-center">Paired Region</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -63,9 +66,11 @@
 									{
 										<tr>
 											<th scope="row" class="text-center">@(++RegionIndex)</th>
+											<td>@item.GeographyGroup / @item.Geography / @item.PhysicalLocation</td>
 											<td>@item.Name</td>
-											<td>@item.RegionType</td>
 											<td>@item.DisplayName</td>
+											<td>@item.RegionType</td>
+											<td>@JsonSerializer.Serialize(item.PairedRegion)</td>
 											<td class="text-center">
 												<button class="btn btn-sm btn-outline-primary" @onclick="(()=>BtnClickInfo(item.Name))">
 													<CIcon icon="cil-info" />

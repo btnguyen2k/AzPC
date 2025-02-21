@@ -4,9 +4,61 @@ namespace AzPC.Shared.Azure;
 
 public class AzureRegion
 {
+	[JsonPropertyName("name")]
 	public string Name { get; set; } = default!;
+
+	[JsonPropertyName("display_name")]
 	public string DisplayName { get; set; } = default!;
+
+	[JsonPropertyName("region_type")]
 	public string RegionType { get; set; } = default!;
+
+	[JsonPropertyName("geography")]
+	public string Geography { get; set; } = default!;
+
+	[JsonPropertyName("geography_group")]
+	public string GeographyGroup { get; set; } = default!;
+
+	[JsonPropertyName("physical_location")]
+	public string PhysicalLocation { get; set; } = default!;
+
+	[JsonPropertyName("latitude")]
+	public string Latitude { get; set; } = default!;
+
+	[JsonPropertyName("longitude")]
+	public string Longitude { get; set; } = default!;
+
+	[JsonPropertyName("paired_region")]
+	public List<string> PairedRegion { get; set; } = [];
+
+	public static AzureRegion UNKNOWN => new()
+	{
+		Name = "unknown",
+		DisplayName = "Unknown",
+		RegionType = "unknown",
+		Geography = "unknown",
+		GeographyGroup = "unknown",
+		PhysicalLocation = "unknown",
+		Latitude = "0",
+		Longitude = "0",
+		PairedRegion = [],
+	};
+
+	public AzureRegion Clone()
+	{
+		return new AzureRegion
+		{
+			Name = Name,
+			DisplayName = DisplayName,
+			RegionType = RegionType,
+			Geography = Geography,
+			GeographyGroup = GeographyGroup,
+			PhysicalLocation = PhysicalLocation,
+			Latitude = Latitude,
+			Longitude = Longitude,
+			PairedRegion = [.. PairedRegion],
+		};
+	}
 }
 
 public class PriceItem

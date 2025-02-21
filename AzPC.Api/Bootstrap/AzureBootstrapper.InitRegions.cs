@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using AzPC.Shared.Azure;
 using AzPC.Api.Ddth.Utilities.JsonHttp;
 
@@ -22,11 +22,25 @@ sealed class AzureRegionsInitializer(
 		var jsonData = await File.ReadAllTextAsync(filename, cancellationToken);
 		var jsonDoc = JsonSerializer.Deserialize<JsonDocument>(jsonData, jsonSerializerOptions);
 		return jsonDoc?.RootElement.EnumerateArray()
-				.Select(x => new AzureRegion
+				.Select(x =>
 				{
-					Name = x.GetProperty("name").GetString()!,
-					DisplayName = x.GetProperty("displayName").GetString()!,
-					RegionType = x.GetProperty("metadata").GetProperty("regionType").GetString()!
+					var r = new AzureRegion
+					{
+						Name = x.GetProperty("name").GetString() ?? "<null>",
+						DisplayName = x.GetProperty("displayName").GetString() ?? "<null>",
+						RegionType = x.GetProperty("metadata").GetProperty("regionType").GetString() ?? "<null>",
+						Geography = x.GetProperty("metadata").GetProperty("geography").GetString() ?? "<null>",
+						GeographyGroup = x.GetProperty("metadata").GetProperty("geographyGroup").GetString() ?? "<null>",
+						PhysicalLocation = x.GetProperty("metadata").GetProperty("physicalLocation").GetString() ?? "<null>",
+						Latitude = x.GetProperty("metadata").GetProperty("latitude").GetString() ?? "<null>",
+						Longitude = x.GetProperty("metadata").GetProperty("longitude").GetString() ?? "<null>",
+					};
+					var pairedRegionNode = x.GetProperty("metadata").GetProperty("pairedRegion");
+					if (pairedRegionNode.ValueKind == JsonValueKind.Array)
+					{
+						r.PairedRegion = [.. pairedRegionNode.EnumerateArray().Select(y => y.GetString() ?? "<null>")];
+					}
+					return r;
 				}).ToList() ?? [];
 	}
 
@@ -52,9 +66,15 @@ sealed class AzureRegionsInitializer(
 				.Distinct().ToList().ForEach(x =>
 				{
 					var region = azureLocations.FirstOrDefault(y => y.Name == x);
-					region ??= new AzureRegion { Name = x, DisplayName = x, RegionType = "Unknown" };
+					if (region is null)
+					{
+						region = AzureRegion.UNKNOWN.Clone();
+						region.Name = x;
+						region.DisplayName = x;
+					}
 					AzureGlobals.AzureRegions.Add(region);
 				});
+			AzureGlobals.AzureRegions = [.. AzureGlobals.AzureRegions.OrderBy(x => x.GeographyGroup).ThenBy(x => x.Geography).ThenBy(x => x.RegionType).ThenBy(x => x.Name)];
 			logger.LogInformation("Azure Regions: {regions}", AzureGlobals.AzureRegions.Count);
 		}
 	}
