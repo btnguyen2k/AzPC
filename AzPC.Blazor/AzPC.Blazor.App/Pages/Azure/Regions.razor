@@ -48,7 +48,6 @@
 									<th scope="col" class="text-center">DisplayName</th>
 									<th scope="col" class="text-center">Type</th>
 									<th scope="col" class="text-center">Paired Region</th>
-                                    <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
 							@if (RegionList.Count() == 0)
@@ -71,11 +70,6 @@
 											<td>@item.DisplayName</td>
 											<td>@item.RegionType</td>
 											<td>@JsonSerializer.Serialize(item.PairedRegion)</td>
-											<td class="text-center">
-												<button class="btn btn-sm btn-outline-primary" @onclick="(()=>BtnClickInfo(item.Name))">
-													<CIcon icon="cil-info" />
-												</button>
-											</td>
 										</tr>
 									}
 								</tbody>

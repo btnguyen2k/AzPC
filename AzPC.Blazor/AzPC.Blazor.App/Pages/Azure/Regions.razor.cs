@@ -1,4 +1,3 @@
-using AzPC.Blazor.App.Shared;
 using AzPC.Shared.Azure;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -6,8 +5,6 @@ namespace AzPC.Blazor.App.Pages.Azure;
 
 public partial class Regions
 {
-	private CModal ModalDialogInfo { get; set; } = default!;
-
 	private bool HideUI { get; set; } = false;
 
 	private string AlertMessage { get; set; } = string.Empty;
@@ -62,11 +59,5 @@ public partial class Regions
 				ShowAlert("danger", result.Message ?? "Unknown error");
 			}
 		}
-	}
-
-	private void BtnClickInfo(string regionName)
-	{
-		SelectedRegion = RegionMap?[regionName];
-		ModalDialogInfo.Open();
 	}
 }
