@@ -1,11 +1,7 @@
-﻿using AzPC.Blazor.App.Helpers;
-using AzPC.Blazor.App.Services;
-using AzPC.Blazor.App.Shared;
+﻿using AzPC.Blazor.App.Shared;
 using AzPC.Shared.Api;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AzPC.Blazor.App.Pages;
 
@@ -18,18 +14,12 @@ public partial class Login : BaseComponent
 		ModalDialog.Open();
 	}
 
-	private string Email { get; set; } = string.Empty;
-	private string Password { get; set; } = string.Empty;
-
 	private IEnumerable<string> ExternalAuthProviders { get; set; } = [];
 
 	private string AlertType { get; set; } = "info";
 	private string AlertMessage { get; set; } = string.Empty;
 	private bool HideLoginForm { get; set; } = false;
 	private bool DisableExternalLogin { get; set; } = false;
-
-	[Inject]
-	private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
 	private void CloseAlert()
 	{
@@ -92,39 +82,5 @@ public partial class Login : BaseComponent
 
 		await Task.Delay(100); // UI hack to have the alert displayed before redirecting
 		NavigationManager.NavigateTo(apiResult.Data ?? UIGlobals.ROUTE_HOME);
-	}
-
-	private async void BtnClickLogin()
-	{
-		if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
-		{
-			ShowAlert("warning", "Please enter Email and Password to login.");
-			return;
-		}
-
-		HideLoginForm = DisableExternalLogin = true;
-		ShowAlert("waiting", "Authenticating, please wait...");
-		var req = new AuthReq()
-		{
-			Email = Email,
-			Password = Password
-		};
-		var resp = await ApiClient.LoginAsync(req, ApiBaseUrl);
-		if (resp.Status != 200)
-		{
-			HideLoginForm = DisableExternalLogin = false;
-			ShowAlert("danger", resp.Message!);
-			return;
-		}
-
-		ShowAlert("success", "Authenticated successfully, logging in...⏳");
-		var returnUrl = QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query)
-			.TryGetValue("returnUrl", out var returnUrlValue) ? returnUrlValue.FirstOrDefault("/") : "/";
-
-		var localStorage = ServiceProvider.GetRequiredService<LocalStorageHelper>();
-		await localStorage.SetItemAsync(Globals.LOCAL_STORAGE_KEY_AUTH_TOKEN, resp.Data.Token!);
-		((JwtAuthenticationStateProvider)AuthenticationStateProvider).NotifyStageChanged();
-
-		NavigationManager.NavigateTo(returnUrl ?? "/", forceLoad: false);
 	}
 }
