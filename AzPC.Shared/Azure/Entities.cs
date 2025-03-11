@@ -61,86 +61,134 @@ public class AzureRegion
 	}
 }
 
-public class PriceItem
+public class AzureProduct
 {
-	[JsonPropertyName("currencyCode")]
-	public string CurrencyCode { get; set; } = default!;
+	[JsonPropertyName("id")]
+	public string Id { get; set; } = default!;
 
-	[JsonPropertyName("tierMinimumUnits")]
-	public double TierMinimumUnits { get; set; }
+	[JsonPropertyName("name")]
+	public string Name { get; set; } = default!;
 
-	[JsonPropertyName("retailPrice")]
-	public double RetailPrice { get; set; }
-
-	[JsonPropertyName("unitPrice")]
-	public double UnitPrice { get; set; }
-
-	[JsonPropertyName("armRegionName")]
-	public string ArmRegionName { get; set; } = default!;
-
-	[JsonPropertyName("location")]
-	public string Location { get; set; } = default!;
-
-	[JsonPropertyName("effectiveStartDate")]
-	public DateTimeOffset EffectiveStartDate { get; set; }
-
-	[JsonPropertyName("meterId")]
-	public string MeterId { get; set; } = default!;
-
-	[JsonPropertyName("meterName")]
-	public string MeterName { get; set; } = default!;
-
-	[JsonPropertyName("productId")]
-	public string ProductId { get; set; } = default!;
-
-	[JsonPropertyName("skuId")]
+	[JsonPropertyName("sku_id")]
 	public string SkuId { get; set; } = default!;
 
-	[JsonPropertyName("productName")]
-	public string ProductName { get; set; } = default!;
-
-	[JsonPropertyName("skuName")]
+	[JsonPropertyName("sku_name")]
 	public string SkuName { get; set; } = default!;
-
-	[JsonPropertyName("serviceName")]
-	public string ServiceName { get; set; } = default!;
-
-	[JsonPropertyName("serviceId")]
-	public string ServiceId { get; set; } = default!;
-
-	[JsonPropertyName("serviceFamily")]
-	public string ServiceFamily { get; set; } = default!;
-
-	[JsonPropertyName("unitOfMeasure")]
-	public string UnitOfMeasure { get; set; } = default!;
-
-	[JsonPropertyName("type")]
-	public string Type { get; set; } = default!;
-
-	[JsonPropertyName("isPrimaryMeterRegion")]
-	public bool IsPrimaryMeterRegion { get; set; }
-
-	[JsonPropertyName("armSkuName")]
-	public string ArmSkuName { get; set; } = default!;
 }
 
-public struct RetailPriceResp
+public class AzureService
 {
-	[JsonPropertyName("BillingCurrency")]
-	public string BillingCurrency { get; set; }
+	[JsonPropertyName("id")]
+	public string Id { get; set; } = default!;
 
-	[JsonPropertyName("CustomerEntityId")]
-	public string CustomerEntityId { get; set; }
+	[JsonPropertyName("name")]
+	public string Name { get; set; } = default!;
 
-	[JsonPropertyName("CustomerEntityType")]
-	public string CustomerEntityType { get; set; }
+	[JsonPropertyName("products")]
+	public IDictionary<string, AzureProduct> Products { get; set; } = new Dictionary<string, AzureProduct>();
 
-	[JsonPropertyName("NextPageLink")]
-	public string NextPageLink { get; set; }
-
-	[JsonPropertyName("Count")]
-	public int Count { get; set; }
-
-	[JsonPropertyName("Items")]
-	public List<PriceItem> Items { get; set; }
+	public AzureService AddProduct(AzureProduct product)
+	{
+		Products[product.Id] = product;
+		return this;
+	}
 }
+
+public class AzureServiceFamily
+{
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = default!;
+
+    [JsonPropertyName("services")]
+    public IDictionary<string, AzureService> Services { get; set; } = new Dictionary<string, AzureService>();
+
+    public AzureServiceFamily AddService(AzureService service)
+    {
+        Services[service.Id] = service;
+        return this;
+    }
+}
+
+// public class PriceItem
+// {
+// 	[JsonPropertyName("currencyCode")]
+// 	public string CurrencyCode { get; set; } = default!;
+
+// 	[JsonPropertyName("tierMinimumUnits")]
+// 	public double TierMinimumUnits { get; set; }
+
+// 	[JsonPropertyName("retailPrice")]
+// 	public double RetailPrice { get; set; }
+
+// 	[JsonPropertyName("unitPrice")]
+// 	public double UnitPrice { get; set; }
+
+// 	[JsonPropertyName("armRegionName")]
+// 	public string ArmRegionName { get; set; } = default!;
+
+// 	[JsonPropertyName("location")]
+// 	public string Location { get; set; } = default!;
+
+// 	[JsonPropertyName("effectiveStartDate")]
+// 	public DateTimeOffset EffectiveStartDate { get; set; }
+
+// 	[JsonPropertyName("meterId")]
+// 	public string MeterId { get; set; } = default!;
+
+// 	[JsonPropertyName("meterName")]
+// 	public string MeterName { get; set; } = default!;
+
+// 	[JsonPropertyName("productId")]
+// 	public string ProductId { get; set; } = default!;
+
+// 	[JsonPropertyName("skuId")]
+// 	public string SkuId { get; set; } = default!;
+
+// 	[JsonPropertyName("productName")]
+// 	public string ProductName { get; set; } = default!;
+
+// 	[JsonPropertyName("skuName")]
+// 	public string SkuName { get; set; } = default!;
+
+// 	[JsonPropertyName("serviceName")]
+// 	public string ServiceName { get; set; } = default!;
+
+// 	[JsonPropertyName("serviceId")]
+// 	public string ServiceId { get; set; } = default!;
+
+// 	[JsonPropertyName("serviceFamily")]
+// 	public string ServiceFamily { get; set; } = default!;
+
+// 	[JsonPropertyName("unitOfMeasure")]
+// 	public string UnitOfMeasure { get; set; } = default!;
+
+// 	[JsonPropertyName("type")]
+// 	public string Type { get; set; } = default!;
+
+// 	[JsonPropertyName("isPrimaryMeterRegion")]
+// 	public bool IsPrimaryMeterRegion { get; set; }
+
+// 	[JsonPropertyName("armSkuName")]
+// 	public string ArmSkuName { get; set; } = default!;
+// }
+
+// public struct RetailPriceResp
+// {
+// 	[JsonPropertyName("BillingCurrency")]
+// 	public string BillingCurrency { get; set; }
+
+// 	[JsonPropertyName("CustomerEntityId")]
+// 	public string CustomerEntityId { get; set; }
+
+// 	[JsonPropertyName("CustomerEntityType")]
+// 	public string CustomerEntityType { get; set; }
+
+// 	[JsonPropertyName("NextPageLink")]
+// 	public string NextPageLink { get; set; }
+
+// 	[JsonPropertyName("Count")]
+// 	public int Count { get; set; }
+
+// 	[JsonPropertyName("Items")]
+// 	public List<PriceItem> Items { get; set; }
+// }

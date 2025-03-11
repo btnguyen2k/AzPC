@@ -13,6 +13,7 @@ public class AzureBootstrapper
 		var logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger<AzureBootstrapper>();
 		logger.LogInformation("Initializing Azure static data...");
 
+		appBuilder.Services.AddHostedService<AzureProductsInitializer>();
 		appBuilder.Services.AddHostedService<AzureRegionsInitializer>();
 	}
 }

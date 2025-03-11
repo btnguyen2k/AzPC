@@ -9,9 +9,18 @@ public class AzureController : ApiBaseController
 	/// <summary>
 	/// Gets list of Azure regions
 	/// </summary>
-	[HttpGet("/api/azure/regions")]
-	public ActionResult<ApiResp<IEnumerable<AzureRegion>>> GetExternalAuthProviders()
+	[HttpGet(IApiClient.API_ENDPOINT_AZURE_REGIONS)]
+	public ActionResult<ApiResp<IEnumerable<AzureRegion>>> GetAzureRegions()
 	{
 		return ResponseOk(AzureGlobals.AzureRegions);
+	}
+
+	/// <summary>
+	/// Gets list of Azure products
+	/// </summary>
+	[HttpGet(IApiClient.API_ENDPOINT_AZURE_PRODUCTS)]
+	public ActionResult<ApiResp<IEnumerable<AzureServiceFamily>>> GetAzureProducts()
+	{
+		return ResponseOk(AzureGlobals.AzureServiceFamilies);
 	}
 }

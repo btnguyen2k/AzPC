@@ -20,6 +20,7 @@ public interface IApiClient
 	public const string API_ENDPOINT_EXTERNAL_AUTH_URL = "/api/external-auth/url";
 
 	public const string API_ENDPOINT_AZURE_REGIONS = "/api/azure/regions";
+	public const string API_ENDPOINT_AZURE_PRODUCTS = "/api/azure/products";
 
 	/// <summary>
 	/// Calls the API <see cref="API_ENDPOINT_INFO"/> to get the backend information.

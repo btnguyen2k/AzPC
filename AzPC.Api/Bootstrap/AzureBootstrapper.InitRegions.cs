@@ -47,7 +47,7 @@ sealed class AzureRegionsInitializer(
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
 		var azureLocations = await LoadAzureLocationsData(cancellationToken);
-		logger.LogInformation("Azure Locations: {locations}", azureLocations.Count);
+		logger.LogInformation("Azure Locations: {count}", azureLocations.Count);
 
 		using (var scope = serviceProvider.CreateScope())
 		{
