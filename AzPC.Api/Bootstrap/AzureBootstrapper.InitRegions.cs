@@ -1,12 +1,9 @@
 ﻿using System.Text.Json;
 using AzPC.Shared.Azure;
-using AzPC.Api.Ddth.Utilities.JsonHttp;
 
 namespace AzPC.Api.Bootstrap;
 
-sealed class AzureRegionsInitializer(
-	IServiceProvider serviceProvider,
-	ILogger<AzureRegionsInitializer> logger) : IHostedService
+sealed class AzureRegionsInitializer(ILogger<AzureRegionsInitializer> logger) : IHostedService
 {
 	public Task StopAsync(CancellationToken cancellationToken)
 	{

@@ -69,11 +69,17 @@ public class AzureProduct
 	[JsonPropertyName("name")]
 	public string Name { get; set; } = default!;
 
-	[JsonPropertyName("sku_id")]
-	public string SkuId { get; set; } = default!;
+	// [JsonPropertyName("sku_id")]
+	// public string SkuId { get; set; } = default!;
 
 	[JsonPropertyName("sku_name")]
 	public string SkuName { get; set; } = default!;
+
+	// [JsonPropertyName("meter_id")]
+	// public string MetterId { get; set; } = default!;
+
+	[JsonPropertyName("meter_name")]
+	public string MeterName { get; set; } = default!;
 }
 
 public class AzureService
@@ -87,26 +93,27 @@ public class AzureService
 	[JsonPropertyName("products")]
 	public IDictionary<string, AzureProduct> Products { get; set; } = new Dictionary<string, AzureProduct>();
 
-	public AzureService AddProduct(AzureProduct product)
-	{
-		Products[product.Id] = product;
-		return this;
-	}
+	// public AzureService AddProduct(AzureProduct product)
+	// {
+	// 	// Products[product.Id] = product;
+	// 	Products[$"{product.Id}/{product.MeterName}"] = product;
+	// 	return this;
+	// }
 }
 
 public class AzureServiceFamily
 {
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = default!;
+	[JsonPropertyName("name")]
+	public string Name { get; set; } = default!;
 
-    [JsonPropertyName("services")]
-    public IDictionary<string, AzureService> Services { get; set; } = new Dictionary<string, AzureService>();
+	[JsonPropertyName("services")]
+	public IDictionary<string, AzureService> Services { get; set; } = new Dictionary<string, AzureService>();
 
-    public AzureServiceFamily AddService(AzureService service)
-    {
-        Services[service.Id] = service;
-        return this;
-    }
+	public AzureServiceFamily AddService(AzureService service)
+	{
+		Services[service.Id] = service;
+		return this;
+	}
 }
 
 // public class PriceItem

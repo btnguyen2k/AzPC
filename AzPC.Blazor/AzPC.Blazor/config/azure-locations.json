@@ -252,6 +252,22 @@
     "type": "Region"
   },
   {
+    "displayName": "Indonesia Central",
+    "metadata": {
+      "geography": "Indonesia",
+      "geographyGroup": "Asia Pacific",
+      "latitude": "-6.2",
+      "longitude": "106.816666",
+      "pairedRegion": [],
+      "physicalLocation": "Jakarta",
+      "regionCategory": "Recommended",
+      "regionType": "Physical"
+    },
+    "name": "indonesiacentral",
+    "regionalDisplayName": "(Asia Pacific) Indonesia Central",
+    "type": "Region"
+  },
+  {
     "displayName": "Japan East",
     "metadata": {
       "geography": "Japan",
@@ -267,6 +283,24 @@
     },
     "name": "japaneast",
     "regionalDisplayName": "(Asia Pacific) Japan East",
+    "type": "Region"
+  },
+  {
+    "displayName": "Japan West",
+    "metadata": {
+      "geography": "Japan",
+      "geographyGroup": "Asia Pacific",
+      "latitude": "34.6939",
+      "longitude": "135.5022",
+      "pairedRegion": [
+        "japaneast"
+      ],
+      "physicalLocation": "Osaka",
+      "regionCategory": "Recommended",
+      "regionType": "Physical"
+    },
+    "name": "japanwest",
+    "regionalDisplayName": "(Asia Pacific) Japan West",
     "type": "Region"
   },
   {
@@ -1173,24 +1207,6 @@
     },
     "name": "westus",
     "regionalDisplayName": "(US) West US",
-    "type": "Region"
-  },
-  {
-    "displayName": "Japan West",
-    "metadata": {
-      "geography": "Japan",
-      "geographyGroup": "Asia Pacific",
-      "latitude": "34.6939",
-      "longitude": "135.5022",
-      "pairedRegion": [
-        "japaneast"
-      ],
-      "physicalLocation": "Osaka",
-      "regionCategory": "Other",
-      "regionType": "Physical"
-    },
-    "name": "japanwest",
-    "regionalDisplayName": "(Asia Pacific) Japan West",
     "type": "Region"
   },
   {

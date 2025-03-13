@@ -42,7 +42,6 @@ public partial class Skus
 			ShowAlert("info", "Loading Azure products...");
 			SelectedServiceFamily = string.Empty;
 			SelectedService = string.Empty;
-			// SelectedProduct = string.Empty;
 			var result = await ApiClient.GetAzureProductsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
 			if (result.Status == 200)
 			{
@@ -56,7 +55,7 @@ public partial class Skus
 					ServiceMap.Add(serviceFamily.Name, serviceList);
 					foreach (var service in serviceList)
 					{
-						var productList = service.Products.Values.OrderBy(p => p.Name);
+						var productList = service.Products.Values.OrderBy(p => p.Name).ThenBy(p => p.SkuName).ThenBy(p => p.MeterName);
 						ProductMap.Add(service.Id, productList);
 					}
 				}
