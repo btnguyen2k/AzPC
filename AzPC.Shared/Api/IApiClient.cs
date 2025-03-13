@@ -102,4 +102,14 @@ public interface IApiClient
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	public Task<ApiResp<List<AzureRegion>>> GetAzureRegionsAsync(string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Calls the API <see cref="API_ENDPOINT_AZURE_PRODUCTS"/> to get the list of Azure products.
+	/// </summary>
+	/// <param name="authToken">The authentication token to authenticate current user.</param>
+	/// <param name="baseUrl">The base URL of the API, optional.</param>
+	/// <param name="httpClient">The <see cref="HttpClient"/> to use for the API call, optional.</param>
+	/// <cancellationToken></cancellationToken>
+	/// <returns></returns>
+	public Task<ApiResp<List<AzureServiceFamily>>> GetAzureProductsAsync(string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default);
 }

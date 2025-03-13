@@ -426,4 +426,17 @@ public class ApiClient : IApiClient
 		);
 		return await ReadResponseAsync<List<AzureRegion>>(httpResult, cancellationToken);
 	}
+
+	/// <inheritdoc/>
+	public async Task<ApiResp<List<AzureServiceFamily>>> GetAzureProductsAsync(string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default)
+	{
+		var httpResult = await BuildAndSendRequestAsync(
+			httpClient,
+			HttpMethod.Get, baseUrl, IApiClient.API_ENDPOINT_AZURE_PRODUCTS,
+			authToken,
+			NoData,
+			cancellationToken
+		);
+		return await ReadResponseAsync<List<AzureServiceFamily>>(httpResult, cancellationToken);
+	}
 }
