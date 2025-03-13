@@ -1,5 +1,7 @@
+using AzPC.Blazor.App.Helpers;
 using AzPC.Shared.Azure;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AzPC.Blazor.App.Pages.Azure;
 
@@ -12,7 +14,6 @@ public partial class Skus
 
 	private string SelectedServiceFamily { get; set; } = string.Empty;
 	private string SelectedService { get; set; } = string.Empty;
-	private string SelectedProduct { get; set; } = string.Empty;
 	private IEnumerable<AzureServiceFamily>? ServiceFamilyList { get; set; }
 	private IEnumerable<AzureService>? ServiceList { get; set; }
 	private IEnumerable<AzureProduct>? ProductList { get; set; }
@@ -35,13 +36,13 @@ public partial class Skus
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		await base.OnAfterRenderAsync(firstRender);
-		SelectedServiceFamily = string.Empty;
-		SelectedService = string.Empty;
-		SelectedProduct = string.Empty;
 		if (firstRender)
 		{
 			HideUI = true;
 			ShowAlert("info", "Loading Azure products...");
+			SelectedServiceFamily = string.Empty;
+			SelectedService = string.Empty;
+			// SelectedProduct = string.Empty;
 			var result = await ApiClient.GetAzureProductsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
 			if (result.Status == 200)
 			{
@@ -65,7 +66,23 @@ public partial class Skus
 			{
 				ShowAlert("danger", result.Message ?? "Unknown error");
 			}
+
+			await LoadSelection();
+			EventChangeServiceOrFamily(SelectedServiceFamily, SelectedService, false);
 		}
+	}
+
+	private async Task SaveSelection()
+	{
+		var localStorage = ServiceProvider.GetRequiredService<LocalStorageHelper>();
+		await localStorage.SetItemAsync("SelectedServiceFamily", SelectedServiceFamily);
+		await localStorage.SetItemAsync("SelectedService", SelectedService);
+	}
+	private async Task LoadSelection()
+	{
+		var localStorage = ServiceProvider.GetRequiredService<LocalStorageHelper>();
+		SelectedServiceFamily = await localStorage.GetItemAsync<string>("SelectedServiceFamily") ?? string.Empty;
+		SelectedService = await localStorage.GetItemAsync<string>("SelectedService") ?? string.Empty;
 	}
 
 	private void OnServiceFamilyChanged(ChangeEventArgs e)
@@ -73,47 +90,25 @@ public partial class Skus
 		var serviceFamily = e.Value?.ToString() ?? string.Empty;
 		if (!SelectedServiceFamily.Equals(serviceFamily, StringComparison.InvariantCulture))
 		{
-			EventServiceFamilyChanged(serviceFamily);
+			EventChangeServiceOrFamily(serviceFamily, string.Empty);
 		}
 	}
-	private void EventServiceFamilyChanged(string serviceFamily)
-	{
-		Console.WriteLine($"ServiceFamilyChanged: {serviceFamily}");
-		SelectedServiceFamily = serviceFamily;
-		SelectedService = string.Empty;
-		SelectedProduct = string.Empty;
-		ProductList = null;
-		if (ServiceMap.TryGetValue(serviceFamily, out var value))
-		{
-			ServiceList = value;
-		}
-		else
-		{
-			ServiceList = null;
-		}
-		StateHasChanged();
-	}
-
 	private void OnServiceChanged(ChangeEventArgs e)
 	{
 		var service = e.Value?.ToString() ?? string.Empty;
 		if (!SelectedService.Equals(service, StringComparison.InvariantCulture))
 		{
-			EventServiceChanged(service);
+			EventChangeServiceOrFamily(SelectedServiceFamily, service);
 		}
 	}
-	private void EventServiceChanged(string service)
+
+	private async void EventChangeServiceOrFamily(string serviceFamily, string service, bool saveSelection = true)
 	{
-		Console.WriteLine($"ServiceChanged: {service}");
+		ServiceList = ServiceMap.TryGetValue(serviceFamily, out var services) ? services : null;
+		ProductList = ProductMap.TryGetValue(service, out var products) ? products : null;
+		SelectedServiceFamily = serviceFamily;
 		SelectedService = service;
-		SelectedProduct = string.Empty;
-		if (ProductMap.TryGetValue(service, out var value))
-		{
-			ProductList = value;
-		}
-		else
-		{
-			ProductList = null;
-		}
+		if (saveSelection) await SaveSelection();
+		StateHasChanged();
 	}
 }
