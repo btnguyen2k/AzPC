@@ -12,8 +12,6 @@ public partial class Regions
 
 	private int RegionIndex = 0;
 	private IEnumerable<AzureRegion>? RegionList { get; set; }
-	private IDictionary<string, AzureRegion>? RegionMap { get; set; }
-	private AzureRegion? SelectedRegion { get; set; }
 
 	private void CloseAlert()
 	{
@@ -41,7 +39,6 @@ public partial class Regions
 			{
 				HideUI = false;
 				RegionList = result.Data?.OrderBy(r => r.Name);
-				RegionMap = RegionList!.ToDictionary(region => region.Name);
 				var queryParameters = QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query);
 				var alertMessage = queryParameters.TryGetValue("alertMessage", out var alertMessageValue) ? alertMessageValue.ToString() : string.Empty;
 				var alertType = queryParameters.TryGetValue("alertType", out var alertTypeValue) ? alertTypeValue.ToString() : string.Empty;
