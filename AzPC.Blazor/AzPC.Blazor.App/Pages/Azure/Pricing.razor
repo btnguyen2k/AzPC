@@ -41,7 +41,7 @@
 					{
 						<div class="row">
 							<div class="col">
-								<select class="form-select form-select-sm" @onchange="@OnServiceFamilyChanged">
+								<select class="form-select form-select-sm mb-2" @onchange="@OnServiceFamilyChanged">
 									<option value="" selected="@SelectedServiceFamily.Equals(string.Empty))">-= Service Family =-</option>
 									@if (ServiceFamilyList != null)
 									{
@@ -51,21 +51,7 @@
 										}
 									}
 								</select>
-							</div>
-							<div class="col">
-								<select class="form-select" id="ms1" multiple data-coreui-search="global">
-									<option value="0">Angular</option>
-									<option value="1">Bootstrap</option>
-									<option value="2">React.js</option>
-									<option value="3">Vue.js</option>
-									<optgroup label="backend">
-										<option value="4">Django</option>
-										<option value="5">Laravel</option>
-										<option value="6">Node.js</option>
-									</optgroup>
-								</select>
-								@*
-								<select class="form-select form-select-sm" @onchange="@OnServiceChanged">
+								<select class="form-select form-select-sm mb-2" @onchange="@OnServiceChanged">
 									<option value="" selected="@SelectedService.Equals(string.Empty)">-= Service =-</option>
 									@if (ServiceList != null)
 									{
@@ -75,7 +61,27 @@
 										}
 									}
 								</select>
-								*@
+								<select class="form-select form-select-sm mb-2" @onchange="@OnProductChanged">
+									<option value="" selected="@SelectedProduct.Equals(string.Empty)">-= Product =-</option>
+									@if (ProductList != null)
+									{
+										@foreach (var item in ProductList)
+										{
+											<option value="@item.Id" selected="@item.Id.Equals(@SelectedProduct)">@item.Id - @item.Name</option>
+										}
+									}
+								</select>
+							</div>
+							<div class="col">
+								<select class="form-select" multiple @onchange="@OnRegionChanged">
+									@if (RegionList != null)
+									{
+										@foreach (var item in RegionList)
+										{
+											<option value="@item.Name">@item.Name</option>
+										}
+									}
+								</select>
 							</div>
 						</div>
 						<div class="row mt-2">

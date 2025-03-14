@@ -33,7 +33,7 @@ public partial class Regions
 		if (firstRender)
 		{
 			HideUI = true;
-			ShowAlert("info", "Loading applications...");
+			ShowAlert("info", "Loading Azure regions...");
 			var result = await ApiClient.GetAzureRegionsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
 			if (result.Status == 200)
 			{
