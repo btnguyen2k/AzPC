@@ -40,7 +40,7 @@
 					@if (!HideUI)
 					{
 						<div class="row">
-							<div class="col">
+							<div class="col-sm-12 col-md-6 mb-2">
 								<select class="form-select form-select-sm" @onchange="@OnServiceFamilyChanged">
 									<option value="" selected="@SelectedServiceFamily.Equals(string.Empty))">-= Service Family =-</option>
 									@if (ServiceFamilyList != null)
@@ -52,9 +52,9 @@
 									}
 								</select>
 							</div>
-							<div class="col">
+							<div class="col-sm-12 col-md-6 mb-2">
 								<select class="form-select form-select-sm" @onchange="@OnServiceChanged">
-									<option value="" selected="@SelectedService.Equals(string.Empty)">-= Service =-</option>
+									<option value="" selected="@SelectedService.Equals(string.Empty)">-=(select a family for available services)=-</option>
 									@if (ServiceList != null)
 									{
 										@foreach (var item in ServiceList)
@@ -65,38 +65,40 @@
 								</select>
 							</div>
 						</div>
-						<div class="row mt-2">
+						<div class="row">
 							<div class="col">
-								@if (ProductList == null || ProductList.Count() == 0)
-								{
-									<CAlert type="info">
-										No data, please select a service family/service to view the SKUs.
-									</CAlert>
-								}
-								else
-								{
-									<table class="table table-sm table-bordered border-primary table-striped table-hover">
-										<thead>
-											<tr>
-												<th scope="col" class="text-center">Product Id</th>
-												<th scope="col" class="text-center">Product Name</th>
-												<th scope="col" class="text-center">SKU Name</th>
-												<th scope="col" class="text-center">Meter Name</th>
-											</tr>
-										</thead>
-										<tbody class="small">
-											@foreach (var item in ProductList??[])
-											{
+								<div class="table-responsive">
+									@if (ProductList == null || ProductList.Count() == 0)
+									{
+										<CAlert type="info">
+											No data, please select a service family and service to view the SKUs.
+										</CAlert>
+									}
+									else
+									{
+										<table class="table table-sm table-bordered border-primary table-striped table-hover">
+											<thead>
 												<tr>
-													<td>@item.Id</td>
-													<td>@item.Name</td>
-													<td>@item.SkuName</td>
-													<td>@item.MeterName</td>
+													<th scope="col" class="text-center text-nowrap">Product Id</th>
+													<th scope="col" class="text-center text-nowrap">Product Name</th>
+													<th scope="col" class="text-center text-nowrap">SKU Name</th>
+													<th scope="col" class="text-center text-nowrap">Meter Name</th>
 												</tr>
-											}
-										</tbody>
-									</table>
-								}
+											</thead>
+											<tbody class="small">
+												@foreach (var item in ProductList??[])
+												{
+													<tr>
+														<td>@item.Id</td>
+														<td>@item.Name</td>
+														<td>@item.SkuName</td>
+														<td>@item.MeterName</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+									}
+								</div>
 							</div>
 						</div>
 					}
