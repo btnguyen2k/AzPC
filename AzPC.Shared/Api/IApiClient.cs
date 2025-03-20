@@ -21,6 +21,7 @@ public interface IApiClient
 
 	public const string API_ENDPOINT_AZURE_REGIONS = "/api/azure/regions";
 	public const string API_ENDPOINT_AZURE_PRODUCTS = "/api/azure/products";
+	public const string API_ENDPOINT_AZURE_PRICING = "/api/azure/pricing";
 
 	/// <summary>
 	/// Calls the API <see cref="API_ENDPOINT_INFO"/> to get the backend information.
