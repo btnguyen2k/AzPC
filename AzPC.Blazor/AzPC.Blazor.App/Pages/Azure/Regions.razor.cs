@@ -38,7 +38,7 @@ public partial class Regions
 			if (result.Status == 200)
 			{
 				HideUI = false;
-				RegionList = result.Data?.OrderBy(r => r.Name);
+				RegionList = result.Data?.OrderBy(r => r.GeographyGroup).ThenBy(r => r.Geography).ThenBy(r => r.Name);
 				var queryParameters = QueryHelpers.ParseQuery(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query);
 				var alertMessage = queryParameters.TryGetValue("alertMessage", out var alertMessageValue) ? alertMessageValue.ToString() : string.Empty;
 				var alertType = queryParameters.TryGetValue("alertType", out var alertTypeValue) ? alertTypeValue.ToString() : string.Empty;
