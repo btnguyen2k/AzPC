@@ -79,13 +79,28 @@
 							</div>
 							<div class="col-sm-12 col-md-6 mb-2">
 								<select class="form-select h-100" multiple @onchange="@OnRegionChanged">
-									@if (RegionList != null)
+									@if (RegionGroups != null)
+									{
+										@foreach (var item in RegionGroups)
+										{
+											<optgroup label="@item.Name">
+												@if (item.Regions != null)
+												{
+													@foreach (var region in item.Regions)
+													{
+														<option value="@region.Name" selected="@SelectedRegions.Contains(region.Name)">@region.Name</option>
+													}
+												}
+											</optgroup>
+										}
+									}
+									@* @if (RegionList != null)
 									{
 										@foreach (var item in RegionList)
 										{
 											<option value="@item.Name">@item.Name</option>
 										}
-									}
+									} *@
 								</select>
 							</div>
 						</div>

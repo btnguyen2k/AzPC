@@ -27,6 +27,13 @@ public partial class Pricing
 		}
 	}
 
+	private struct AzureRegionGroup
+	{
+		public string Name { get; set; }
+		public IEnumerable<AzureRegion> Regions { get; set; }
+	}
+	private IEnumerable<AzureRegionGroup> RegionGroups { get; set; } = [];
+
 	private IEnumerable<AzureServiceFamily>? ServiceFamilyList { get; set; }
 	private IEnumerable<AzureService>? ServiceList { get; set; }
 	private IEnumerable<AzureProduct>? ProductList { get; set; }
@@ -61,7 +68,12 @@ public partial class Pricing
 			var resultRegions = await ApiClient.GetAzureRegionsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
 			if (resultRegions.Status == 200)
 			{
-				RegionList = resultRegions.Data?.OrderBy(r => r.Name);
+				RegionList = resultRegions.Data!.OrderBy(r => r.Name);
+				RegionGroups = RegionList.GroupBy(r => $"{r.GeographyGroup}/{r.Geography}").Select(g => new AzureRegionGroup
+				{
+					Name = g.Key,
+					Regions = g.OrderBy(r => r.Name),
+				}).OrderBy(g => g.Name);
 			}
 			else
 			{
