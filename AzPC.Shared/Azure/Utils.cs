@@ -4,7 +4,7 @@ namespace AzPC.Shared.Azure;
 
 public static class AzureUtils
 {
-	public static async Task<IEnumerable<AzurePriceItem>> GetRetailPriceAsync(HttpClient httpClient, string apiUrl)
+	public static async Task<IEnumerable<AzurePriceItem>> GetRetailPriceAsync(HttpClient httpClient, string apiUrl, TimeSpan? sleepToAvoidThrottling = null)
 	{
 		var result = new List<AzurePriceItem>();
 		while (true)
@@ -14,6 +14,7 @@ public static class AzureUtils
 			result.AddRange(jsonResp.Items);
 			if (string.IsNullOrEmpty(jsonResp.NextPageLink)) break;
 			apiUrl = jsonResp.NextPageLink;
+			Thread.Sleep(sleepToAvoidThrottling ?? TimeSpan.FromMilliseconds(100)); // Avoid throttling
 		}
 		return result;
 	}

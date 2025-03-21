@@ -1,4 +1,4 @@
-using System.Drawing.Printing;
+using System.Text.Json;
 using AzPC.Shared.Api;
 using AzPC.Shared.Azure;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +12,7 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 	/// Gets list of Azure regions
 	/// </summary>
 	[HttpGet(IApiClient.API_ENDPOINT_AZURE_REGIONS)]
+	[Authorize]
 	public ActionResult<ApiResp<IEnumerable<AzureRegion>>> GetAzureRegions()
 	{
 		return ResponseOk(AzureGlobals.AzureRegions);
@@ -21,6 +22,7 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 	/// Gets list of Azure products
 	/// </summary>
 	[HttpGet(IApiClient.API_ENDPOINT_AZURE_PRODUCTS)]
+	[Authorize]
 	public ActionResult<ApiResp<IEnumerable<AzureServiceFamily>>> GetAzureProducts()
 	{
 		return ResponseOk(AzureGlobals.AzureServiceFamilies);
@@ -30,18 +32,18 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 	{
 		public string ProductId { get; }
 		public string ProductName { get; }
-		public string SkuId { get; }
+		// public string SkuId { get; }
 		public string SkuName { get; }
-		public string MeterId { get; }
+		// public string MeterId { get; }
 		public string MeterName { get; }
 
 		public PSM(AzurePriceItem item)
 		{
 			ProductId = item.ProductId;
 			ProductName = item.ProductName;
-			SkuId = item.SkuId;
+			// SkuId = item.SkuId;
 			SkuName = item.SkuName;
-			MeterId = item.MeterId;
+			// MeterId = item.MeterId;
 			MeterName = item.MeterName;
 		}
 
@@ -49,14 +51,14 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 		{
 			if (obj is PSM other)
 			{
-				return ProductId == other.ProductId && SkuId == other.SkuId && MeterId == other.MeterId;
+				return ProductId == other.ProductId && SkuName == other.SkuName && MeterName == other.MeterName;
 			}
 			return false;
 		}
 
 		public override int GetHashCode()
 		{
-			return HashCode.Combine(ProductId, SkuId, MeterId);
+			return HashCode.Combine(ProductId, SkuName, MeterName);
 		}
 	}
 
@@ -76,7 +78,7 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 
 		// {product/sku/meter -> region-name -> pricing}
 		var pricingPerRegionMap = new Dictionary<PSM, IDictionary<string, AzurePriceItem>>();
-		var baseApiUrl = "https://prices.azure.com/api/retail/prices?$filter=productId eq '{product-id}'";
+		var baseApiUrl = "https://prices.azure.com/api/retail/prices?$filter=productId eq '{product-id}' and type eq 'Consumption'";
 		foreach (var product in req.Products)
 		{
 			var apiUrl = baseApiUrl.Replace("{product-id}", product, StringComparison.Ordinal);
@@ -101,9 +103,9 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 			{
 				ProductId = key.ProductId,
 				ProductName = key.ProductName,
-				SkuId = key.SkuId,
+				// SkuId = key.SkuId,
 				SkuName = key.SkuName,
-				MeterId = key.MeterId,
+				// MeterId = key.MeterId,
 				MeterName = key.MeterName,
 				PricingPerRegion = new Dictionary<string, AzurePriceItem>()
 			};

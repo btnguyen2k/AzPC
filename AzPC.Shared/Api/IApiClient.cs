@@ -113,4 +113,14 @@ public interface IApiClient
 	/// <cancellationToken></cancellationToken>
 	/// <returns></returns>
 	public Task<ApiResp<List<AzureServiceFamily>>> GetAzureProductsAsync(string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Calls the API <see cref="API_ENDPOINT_AZURE_PRICING"/> to get the Azure pricing for the given product and regions.
+	/// </summary>
+	/// <param name="req"></param>
+	/// <param name="authToken">The authentication token to authenticate current user.</param>
+	/// <param name="baseUrl">The base URL of the API, optional.</param>
+	/// <param name="httpClient">The <see cref="HttpClient"/> to use for the API call, optional.</param>
+	/// <param name="cancellationToken"></param>
+	public Task<ApiResp<List<AzurePricingPerRegion>>> GetAzurePricingAsync(AzurePricingReq req, string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default);
 }

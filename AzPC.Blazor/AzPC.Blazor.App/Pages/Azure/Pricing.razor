@@ -40,7 +40,7 @@
 					@if (!HideUI)
 					{
 						<div class="row">
-							<div class="col">
+							<div class="col-sm-12 col-md-6 mb-2">
 								<select class="form-select form-select-sm mb-2" @onchange="@OnServiceFamilyChanged">
 									<option value="" selected="@SelectedServiceFamily.Equals(string.Empty))">-= Service Family =-</option>
 									@if (ServiceFamilyList != null)
@@ -52,7 +52,7 @@
 									}
 								</select>
 								<select class="form-select form-select-sm mb-2" @onchange="@OnServiceChanged">
-									<option value="" selected="@SelectedService.Equals(string.Empty)">-= Service =-</option>
+									<option value="" selected="@SelectedService.Equals(string.Empty)">-=(select a family for available services)=-</option>
 									@if (ServiceList != null)
 									{
 										@foreach (var item in ServiceList)
@@ -62,7 +62,7 @@
 									}
 								</select>
 								<select class="form-select form-select-sm mb-2" @onchange="@OnProductChanged">
-									<option value="" selected="@SelectedProduct.Equals(string.Empty)">-= Product =-</option>
+									<option value="" selected="@SelectedProduct.Equals(string.Empty)">-=(select a service for available products)=-</option>
 									@if (ProductList != null)
 									{
 										@foreach (var item in ProductList)
@@ -71,9 +71,14 @@
 										}
 									}
 								</select>
+								<div class="d-grid">
+									<button class="btn btn-primary btn-sm" disabled="@BtnGetPricingDisabled" @onclick="()=>BtnGetPricingClicked()">
+										Get pricing for selected product &amp; region(s)
+									</button>
+								</div>
 							</div>
-							<div class="col">
-								<select class="form-select" multiple @onchange="@OnRegionChanged">
+							<div class="col-sm-12 col-md-6 mb-2">
+								<select class="form-select h-100" multiple @onchange="@OnRegionChanged">
 									@if (RegionList != null)
 									{
 										@foreach (var item in RegionList)
@@ -86,10 +91,10 @@
 						</div>
 						<div class="row mt-2">
 							<div class="col">
-								@if (ProductList == null || ProductList.Count() == 0)
+								@if (PricingList == null || PricingList.Count() == 0)
 								{
 									<CAlert type="info">
-										No data, please select a service family/service to view the SKUs.
+										No data, please select a product and region(s) to view pricing.
 									</CAlert>
 								}
 								else
@@ -97,18 +102,33 @@
 									<table class="table table-sm table-bordered border-primary table-striped table-hover">
 										<thead>
 											<tr>
-												<th scope="col" class="text-center">Product Id</th>
-												<th scope="col" class="text-center">Product Name</th>
+												<th scope="col" class="text-center">Product</th>
 												<th scope="col" class="text-center">SKU Name</th>
+												<th scope="col" class="text-center">Meter Name</th>
+												@foreach (var region in PricingRegions)
+												{
+													<th scope="col" class="text-center">@region</th>
+												}
 											</tr>
 										</thead>
 										<tbody class="small">
-											@foreach (var item in ProductList??[])
+											@foreach (var item in PricingList)
 											{
 												<tr>
-													<td>@item.Id</td>
-													<td>@item.Name</td>
+													<td>@item.ProductName</td>
 													<td>@item.SkuName</td>
+													<td>@item.MeterName</td>
+													@foreach (var region in PricingRegions)
+													{
+														if (item.PricingPerRegion.TryGetValue(region, out var pricing))
+														{
+															<td class="text-end">$@pricing.RetailPrice</td>
+														}
+														else
+														{
+															<td class="text-end">-</td>
+														}
+													}
 												</tr>
 											}
 										</tbody>

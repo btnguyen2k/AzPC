@@ -26,14 +26,14 @@ public struct AzurePricingPerRegion
 	[JsonPropertyName("product_name")]
 	public string ProductName { get; set; }
 
-	[JsonPropertyName("sku_id")]
-	public string SkuId { get; set; }
+	// [JsonPropertyName("sku_id")]
+	// public string SkuId { get; set; }
 
 	[JsonPropertyName("sku_name")]
 	public string SkuName { get; set; }
 
-	[JsonPropertyName("meter_id")]
-	public string MeterId { get; set; }
+	// [JsonPropertyName("meter_id")]
+	// public string MeterId { get; set; }
 
 	[JsonPropertyName("meter_name")]
 	public string MeterName { get; set; }

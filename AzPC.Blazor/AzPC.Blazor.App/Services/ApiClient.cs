@@ -439,4 +439,17 @@ public class ApiClient : IApiClient
 		);
 		return await ReadResponseAsync<List<AzureServiceFamily>>(httpResult, cancellationToken);
 	}
+
+	/// <inheritdoc/>
+	public async Task<ApiResp<List<AzurePricingPerRegion>>> GetAzurePricingAsync(AzurePricingReq req, string authToken, string? baseUrl = default, HttpClient? httpClient = default, CancellationToken cancellationToken = default)
+	{
+		var httpResult = await BuildAndSendRequestAsync(
+			httpClient,
+			HttpMethod.Post, baseUrl, IApiClient.API_ENDPOINT_AZURE_PRICING,
+			authToken,
+			req,
+			cancellationToken
+		);
+		return await ReadResponseAsync<List<AzurePricingPerRegion>>(httpResult, cancellationToken);
+	}
 }
