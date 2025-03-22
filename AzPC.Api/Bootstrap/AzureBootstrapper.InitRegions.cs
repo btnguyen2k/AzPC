@@ -47,36 +47,10 @@ sealed class AzureRegionsInitializer(ILogger<AzureRegionsInitializer> logger) : 
 		var azureLocations = await LoadAzureLocationsData(cancellationToken);
 		logger.LogInformation("Azure locations in file: {count}", azureLocations.Count);
 
-		AzureGlobals.AzureRegions = [.. azureLocations.Where(x => x.RegionType.Equals("Physical", StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.GeographyGroup).ThenBy(x => x.Geography).ThenBy(x => x.RegionType).ThenBy(x => x.Name)];
+		AzureGlobals.AzureRegions = [
+			.. azureLocations.Where(x => x.RegionType.Equals("Physical", StringComparison.OrdinalIgnoreCase))
+			.OrderBy(x => x.GeographyGroup).ThenBy(x => x.Geography).ThenBy(x => x.RegionType).ThenBy(x => x.Name)
+		];
 		logger.LogInformation("Physical Azure regions: {regions}", AzureGlobals.AzureRegions.Count);
-
-		// using (var scope = serviceProvider.CreateScope())
-		// {
-		// 	var httpClient = scope.ServiceProvider.GetRequiredService<HttpClient>();
-		// 	var endpoint = AzureGlobals.AzurePricesEndpoint + "&$filter=serviceName eq 'Storage' and meterName eq 'E1 LRS Disk'";
-		// 	logger.LogInformation("Fetching Azure Regions data...{endpoint}", endpoint);
-		// 	var req = new HttpRequestMessage(HttpMethod.Get, endpoint)
-		// 	{
-		// 		Headers = { { "Accept", "application/json" } }
-		// 	};
-		// 	var resp = await httpClient.SendAsync(req, cancellationToken);
-		// 	var jsonResp = await resp.ReadFromJsonAsync<JsonDocument>(cancellationToken);
-
-		// 	AzureGlobals.AzureRegions = [];
-		// 	jsonResp.Data?.RootElement.GetProperty("Items").EnumerateArray().Select(x => x.GetProperty("armRegionName").GetString()!)
-		// 		.Distinct().ToList().ForEach(x =>
-		// 		{
-		// 			var region = azureLocations.FirstOrDefault(y => y.Name == x);
-		// 			if (region is null)
-		// 			{
-		// 				region = AzureRegion.UNKNOWN.Clone();
-		// 				region.Name = x;
-		// 				region.DisplayName = x;
-		// 			}
-		// 			AzureGlobals.AzureRegions.Add(region);
-		// 		});
-		// 	AzureGlobals.AzureRegions = [.. AzureGlobals.AzureRegions.OrderBy(x => x.GeographyGroup).ThenBy(x => x.Geography).ThenBy(x => x.RegionType).ThenBy(x => x.Name)];
-		// 	logger.LogInformation("Azure Regions: {regions}", AzureGlobals.AzureRegions.Count);
-		// }
 	}
 }
