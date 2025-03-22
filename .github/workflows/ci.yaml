@@ -187,11 +187,16 @@ jobs:
       - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.DOCKER_IMAGE }}:${{ steps.meta.outputs.version }}
-      # - name: Log in to Azure
-      #   uses: azure/login@v2
-      #   with:
-      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # - name: Deploy to demo environment
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to demo environment
+        uses: azure/webapps-deploy@v2
+        with:
+          # note: Once login is done with azure/login action, the next set of Azure actions in the workflow can re-use the same session within the job.
+          app-name: 'azpc'
+          images: docker.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
       #   uses: azure/container-apps-deploy-action@v2
       #   with:
       #     containerAppName: ${{ secrets.AZURE_CONTAINER_APP }}
