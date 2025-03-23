@@ -99,49 +99,51 @@
 						</div>
 						<div class="row mt-2">
 							<div class="col">
-								@if (PricingList == null || PricingList.Count() == 0)
-								{
-									<CAlert type="info">
-										No data, please select a product and region(s) to view pricing.
-									</CAlert>
-								}
-								else
-								{
-									<table class="table table-sm table-bordered border-primary table-striped table-hover">
-										<thead>
-											<tr>
-												<th scope="col" class="text-center">Product</th>
-												<th scope="col" class="text-center">SKU Name</th>
-												<th scope="col" class="text-center">Meter Name</th>
-												@foreach (var region in PricingRegions)
-												{
-													<th scope="col" class="text-center">@region</th>
-												}
-											</tr>
-										</thead>
-										<tbody class="small">
-											@foreach (var item in PricingList)
-											{
+								<div class="table-responsive">
+									@if (PricingList == null || PricingList.Count() == 0)
+									{
+										<CAlert type="info">
+											No data, please select a product and region(s) to view pricing.
+										</CAlert>
+									}
+									else
+									{
+										<table class="table table-sm table-bordered border-primary table-striped table-hover">
+											<thead>
 												<tr>
-													<td>@item.ProductName</td>
-													<td>@item.SkuName</td>
-													<td>@item.MeterName</td>
+													<th scope="col" class="text-center text-nowrap">Product</th>
+													<th scope="col" class="text-center text-nowrap">SKU Name</th>
+													<th scope="col" class="text-center text-nowrap">Meter Name</th>
 													@foreach (var region in PricingRegions)
 													{
-														if (item.PricingPerRegion.TryGetValue(region, out var pricing))
-														{
-															<td class="text-end">$@pricing.RetailPrice</td>
-														}
-														else
-														{
-															<td class="text-end">-</td>
-														}
+														<th scope="col" class="text-center text-nowrap">@region</th>
 													}
 												</tr>
-											}
-										</tbody>
-									</table>
-								}
+											</thead>
+											<tbody class="small">
+												@foreach (var item in PricingList)
+												{
+													<tr>
+														<td class="text-nowrap">@item.ProductName</td>
+														<td class="text-nowrap">@item.SkuName</td>
+														<td class="text-nowrap">@item.MeterName</td>
+														@foreach (var region in PricingRegions)
+														{
+															if (item.PricingPerRegion.TryGetValue(region, out var pricing))
+															{
+																<td class="text-end text-nowrap">$@pricing.RetailPrice</td>
+															}
+															else
+															{
+																<td class="text-end">-</td>
+															}
+														}
+													</tr>
+												}
+											</tbody>
+										</table>
+									}
+								</div>
 							</div>
 						</div>
 					}

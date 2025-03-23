@@ -117,6 +117,12 @@ public partial class Pricing
 	private void OnRegionChanged(ChangeEventArgs e)
 	{
 		SelectedRegions = e.Value is IEnumerable<object> regionValues ? [.. regionValues.OfType<string>()] : [];
+		if (SelectedRegions.Length > 5)
+		{
+			ShowAlert("warning", "Too many regions selected, please limit number of regions to 5.");
+			SelectedRegions = SelectedRegions[..5];
+			return;
+		}
 	}
 
 	private async Task SaveSelection()
@@ -181,7 +187,7 @@ public partial class Pricing
 			new AzurePricingReq
 			{
 				Products = [SelectedProduct],
-				Regions = [.. SelectedRegions],
+				Regions = [.. SelectedRegions.Take(5)],
 			},
 			await GetAuthTokenAsync(),
 			ApiBaseUrl
@@ -198,6 +204,6 @@ public partial class Pricing
 		PricingRegions = SelectedRegions;
 		// HideUI = false;
 		ForceBtnGetPricingDisabled = false;
-		ShowAlert("success", $"Azure pricing loaded for regions {JsonSerializer.Serialize(SelectedRegions)}.");
+		ShowAlert("success", $"Azure pricing loaded for regions {string.Join(", ", SelectedRegions)}.");
 	}
 }
