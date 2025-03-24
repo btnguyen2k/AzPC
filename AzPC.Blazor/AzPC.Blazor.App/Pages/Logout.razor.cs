@@ -18,7 +18,7 @@ public partial class Logout : BaseComponent
 	{
 		var localStorage = ServiceProvider.GetRequiredService<LocalStorageHelper>();
 		await localStorage.RemoveItemAsync(Globals.LOCAL_STORAGE_KEY_AUTH_TOKEN);
-		((JwtAuthenticationStateProvider)AuthenticationStateProvider).NotifyStageChanged();
+		// ((JwtAuthenticationStateProvider)AuthenticationStateProvider).NotifyStageChanged();
 
 		NavigationManager.NavigateTo(UIGlobals.ROUTE_LANDING, forceLoad: true);
 	}

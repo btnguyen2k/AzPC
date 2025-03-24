@@ -1,9 +1,7 @@
 ﻿using AzPC.Api.Helpers;
 using AzPC.Shared.Bootstrap;
-using AzPC.Shared.EF;
 using AzPC.Shared.EF.Identity;
 using AzPC.Shared.Identity;
-using AzPC.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AzPC.Api.Bootstrap;
@@ -19,10 +17,7 @@ public class DbContextBootstrapper
 		var logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger<DbContextBootstrapper>();
 		logger.LogInformation("Configuring DbContext services...");
 
-		ConfigureDbContext<IApplicationRepository, ApplicationDbContextRepository>(appBuilder, "Databases:Application", logger);
 		ConfigureDbContext<IIdentityRepository, IdentityDbContextRepository>(appBuilder, "Databases:Identity", logger);
-
-		appBuilder.Services.AddHostedService<ApplicationInitializer>();
 		appBuilder.Services.AddHostedService<IdentityInitializer>();
 	}
 
