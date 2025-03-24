@@ -31,51 +31,54 @@
                     <h4 class="card-title">@PAGE_TITLE</h4>
                 </div>
                 <div class="card-body">
-					@if (!string.IsNullOrEmpty(AlertMessage))
-					{
-						<CAlert type="@AlertType">
-							@AlertMessage
-						</CAlert>
-					}
-                    @if (RegionList != null && !HideUI)
-                    {
-                        <table class="table table-sm table-bordered border-primary table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col" class="text-center">Location</th>
-                                    <th scope="col" class="text-center">Name</th>
-									<th scope="col" class="text-center">DisplayName</th>
-									<th scope="col" class="text-center">Type</th>
-									<th scope="col" class="text-center">Paired Region</th>
-                                </tr>
-                            </thead>
-							@if (RegionList.Count() == 0)
-							{
-								<tbody>
+					<div class="table-responsive">
+						@if (!string.IsNullOrEmpty(AlertMessage))
+						{
+							<CAlert type="@AlertType">
+								@AlertMessage
+							</CAlert>
+						}
+						@if (RegionList != null && !HideUI)
+						{
+							<table class="table table-sm table-bordered border-primary table-striped table-hover">
+								<thead>
 									<tr>
-										<td colspan="7" class="text-center">No data.</td>
+										<th scope="col" class="text-center">#</th>
+										<th scope="col" class="text-center">Location</th>
+										<th scope="col" class="text-center">Name</th>
+										<th scope="col" class="text-center">DisplayName</th>
+										<th scope="col" class="text-center">Type</th>
+										<th scope="col" class="text-center">Paired Region</th>
 									</tr>
-								</tbody>
-							}
-							else
-							{
-								<tbody>
-									@foreach (var item in RegionList)
-									{
+								</thead>
+								@if (RegionList.Count() == 0)
+								{
+									<tbody>
 										<tr>
-											<th scope="row" class="text-center">@(++RegionIndex)</th>
-											<td>@item.GeographyGroup / @item.Geography / @item.PhysicalLocation</td>
-											<td>@item.Name</td>
-											<td>@item.DisplayName</td>
-											<td>@item.RegionType</td>
-											<td>@JsonSerializer.Serialize(item.PairedRegion)</td>
+											<td colspan="7" class="text-center">No data.</td>
 										</tr>
-									}
-								</tbody>
-							}
-                        </table>
-                    }
+									</tbody>
+								}
+								else
+								{
+									<tbody>
+										@foreach (var item in RegionList)
+										{
+											// Google maps docs: https://developers.google.com/maps/documentation/urls/get-started
+											<tr>
+												<th scope="row" class="text-center">@(++RegionIndex)</th>
+												<td>@item.GeographyGroup / @item.Geography / @item.PhysicalLocation (<a href="https://www.google.com/maps/search/?api=1&query=@item.Latitude,@item.Longitude" target="_blank">map</a>)</td>
+												<td>@item.Name</td>
+												<td>@item.DisplayName</td>
+												<td>@item.RegionType</td>
+												<td>@JsonSerializer.Serialize(item.PairedRegion)</td>
+											</tr>
+										}
+									</tbody>
+								}
+							</table>
+						}
+					</div>
                 </div>
             </div>
         </div>
