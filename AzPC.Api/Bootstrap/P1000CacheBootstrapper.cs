@@ -2,7 +2,6 @@
 using AzPC.Shared.Bootstrap;
 using AzPC.Shared.Cache;
 using AzPC.Shared.Identity;
-using AzPC.Shared.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
@@ -21,29 +20,8 @@ public class CacheBootstrapper
 		var logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger<CacheBootstrapper>();
 		logger.LogInformation("Configuring cache services...");
 
-		var (confKeyBase, keyedServiceName) = ("Caches:Application", nameof(Application));
+		var (confKeyBase, keyedServiceName) = ("Caches:Identity", nameof(IIdentityRepository));
 		var cacheConf = SetupCache(appBuilder, confKeyBase, keyedServiceName, logger);
-		if (cacheConf != null)
-		{
-			appBuilder.Services.AddSingleton<ICacheFacade<Application>>(sp =>
-			{
-				var options = new CacheFacadeOptions()
-				{
-					CompressionLevel = cacheConf.CompressionLevel,
-					KeyPrefix = cacheConf.KeyPrefix,
-					DefaultDistributedCacheEntryOptions = new DistributedCacheEntryOptions()
-					{
-						AbsoluteExpirationRelativeToNow = cacheConf.ExpirationAfterWrite > 0 ? TimeSpan.FromSeconds(cacheConf.ExpirationAfterWrite) : null,
-						SlidingExpiration = cacheConf.ExpirationAfterAccess > 0 ? TimeSpan.FromSeconds(cacheConf.ExpirationAfterAccess) : null,
-					},
-				};
-				var cacheService = sp.GetRequiredKeyedService<IDistributedCache>(keyedServiceName);
-				return new CacheFacade<Application>(cacheService, options);
-			});
-		}
-
-		(confKeyBase, keyedServiceName) = ("Caches:Identity", nameof(IIdentityRepository));
-		cacheConf = SetupCache(appBuilder, confKeyBase, keyedServiceName, logger);
 		if (cacheConf != null)
 		{
 			appBuilder.Services.AddSingleton<ICacheFacade<IIdentityRepository>>(sp =>

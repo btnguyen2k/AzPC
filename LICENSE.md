@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) <your name/organization>
+Copyright (c) 2025 by Thanh Nguyen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

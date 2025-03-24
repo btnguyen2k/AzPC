@@ -1,21 +1,9 @@
-# My Awesome Application release notes
+# AzPC release notes
 
-## yyyy-MM-dd - v0.1.0
-
-### Changed
-
-- Change: any change to existing functions
+## 2025-03-24 - v0.0.1
 
 ### Added/Refactoring
 
-- Feature: new features
-- Added: new functions.
-- etc
-
-### Fixed/Improvement
-
-- Fix: Bug #123
-
-### Others
-
-- Docs: documentation updates
+- Feature: View list of Azure Regions
+- Feature: View Azure Products by Regions
+- Feature: View/Compare pricing of Azure Products by Regions

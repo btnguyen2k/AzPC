@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AzPC.Api.Services;
 using AzPC.Shared.Api;
 using AzPC.Shared.ExternalLoginHelper;
@@ -10,28 +9,28 @@ namespace AzPC.Api.Controllers;
 
 public class ExternalAuthController : ApiBaseController
 {
-	private readonly IConfiguration _conf;
-	private readonly IWebHostEnvironment _env;
+	// private readonly IConfiguration _conf;
+	// private readonly IWebHostEnvironment _env;
 	private readonly IAuthenticator? _authenticator;
 	private readonly IAuthenticatorAsync? _authenticatorAsync;
 	private readonly ExternalLoginManager _externalLoginManager;
 
 	public ExternalAuthController(
-		IConfiguration config,
-		IWebHostEnvironment env,
+		// IConfiguration config,
+		// IWebHostEnvironment env,
 		ExternalLoginManager externalLoginManager,
 		IAuthenticator? authenticator, IAuthenticatorAsync? authenticatorAsync)
 	{
-		ArgumentNullException.ThrowIfNull(config, nameof(config));
-		ArgumentNullException.ThrowIfNull(env, nameof(env));
+		// ArgumentNullException.ThrowIfNull(config, nameof(config));
+		// ArgumentNullException.ThrowIfNull(env, nameof(env));
 		ArgumentNullException.ThrowIfNull(externalLoginManager, nameof(externalLoginManager));
 		if (authenticator == null && authenticatorAsync == null)
 		{
 			throw new ArgumentNullException("No authenticator defined.", (Exception?)null);
 		}
 
-		_conf = config;
-		_env = env;
+		// _conf = config;
+		// _env = env;
 		_externalLoginManager = externalLoginManager;
 		_authenticator = authenticator;
 		_authenticatorAsync = authenticatorAsync;
@@ -122,7 +121,7 @@ public class ExternalAuthController : ApiBaseController
 		public IEnumerable<string>? Claims { get; set; }
 	}
 
-	async Task<AzPCUser?> EnsureUserAccountAsync(IIdentityRepository identityRepository, ILookupNormalizer lookupNormalizer, ExternalUserProfile extProfile)
+	static async Task<AzPCUser?> EnsureUserAccountAsync(IIdentityRepository identityRepository, ILookupNormalizer lookupNormalizer, ExternalUserProfile extProfile)
 	{
 		var user = await identityRepository.GetUserByEmailAsync(extProfile.Email!);
 		if (user is not null) return user;
@@ -145,14 +144,14 @@ public class ExternalAuthController : ApiBaseController
 			return null;
 		}
 
-		// add user to roles
-		if (_env.IsDevelopment())
-		{
-			//FIXME for development/demo purposes only, NOT for production!
-			var seedRoles = _conf.GetSection("SeedingData:Identity:Roles").Get<IEnumerable<SeedingRole>>() ?? [];
-			var roles = seedRoles.Select(async sr => await identityRepository.GetRoleByNameAsync(sr.Name!)).Select(r => r.Result).Where(r => r != null);
-			await identityRepository.AddToRolesAsync(user, roles.Select(r => r!));
-		}
+		// // add user to roles
+		// if (_env.IsDevelopment())
+		// {
+		// 	//FIXME for development/demo purposes only, NOT for production!
+		// 	var seedRoles = _conf.GetSection("SeedingData:Identity:Roles").Get<IEnumerable<SeedingRole>>() ?? [];
+		// 	var roles = seedRoles.Select(async sr => await identityRepository.GetRoleByNameAsync(sr.Name!)).Select(r => r.Result).Where(r => r != null);
+		// 	await identityRepository.AddToRolesAsync(user, roles.Select(r => r!));
+		// }
 
 		return user;
 	}

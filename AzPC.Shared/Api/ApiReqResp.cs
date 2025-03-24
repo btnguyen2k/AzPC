@@ -106,4 +106,7 @@ public sealed class AppInfo
 	[JsonPropertyName("description")]
 	[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 	public string? Description { get; set; }
+
+	[JsonPropertyName("login_prompt")]
+	public string? LoginPrompt { get; set; }
 }
