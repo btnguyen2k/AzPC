@@ -29,10 +29,13 @@
             <div class="card border-top-3 mb-4">
                 <div class="card-header">
                     <h4 class="card-title">
-						@PAGE_TITLE
-						<button class="btn btn-sm btn-outline-success" onclick="Table2Excel('tblSkus', 'Azure-Services-Products.xls')">
-							<BIcon icon="file-earmark-spreadsheet" /> Export to Excel
-						</button>
+						@(PAGE_TITLE)&nbsp;
+						@if (ProductList != null && ProductList.Count() > 0)
+						{
+							<button class="btn btn-sm btn-outline-success" onclick="Table2Excel('tblSkus', 'Azure-Services-Products.xls')">
+								<BIcon icon="file-earmark-spreadsheet" /> Export to Excel
+							</button>
+						}
 					</h4>
                 </div>
                 <div class="card-body">
