@@ -16,11 +16,6 @@
     </li>
 </SectionContent>
 
-@* <HeadContent>
-    <!-- Plugins and styles required by this page-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.1/dist/bootstrap-table.min.css">
-</HeadContent> *@
-
 <AuthorizeView>
     <Authorizing>
         <AuthorizingView PageTitle="@($"{PAGE_TITLE} | {AppInfo?.Name} v{AppInfo?.Version} - Authorizing...")" />
@@ -97,16 +92,6 @@
 
 <!-- Plugins and scripts required by this page-->
 <script src="@UIGlobals.ASSET_ROOT/utils.js"></script>
-
-@*
-<script
-  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-  integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.1/dist/bootstrap-table.min.js"></script> *@
 
 @code {
     private const string PAGE_TITLE = "Regions";
