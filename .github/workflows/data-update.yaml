@@ -15,9 +15,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: dev
       - name: Update Azure locations and product categories
         run: |
-          git checkout dev
           cd AzPC.Blazor/AzPC.Blazor/config/
 
           echo "Updating Azure locations..."
