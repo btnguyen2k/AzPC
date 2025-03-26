@@ -1,7 +1,7 @@
 name: 'Update Azure locations and product categories'
 
 on:
-  workflow_call:
+  workflow_dispatch:
 
   schedule:
     # run every Saturday (UTC)
