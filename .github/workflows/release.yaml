@@ -121,7 +121,7 @@ jobs:
       - name: Cleanup file .semrelease/this_release
         run: |
           RESULT='${{ needs.ReleaseDryRun.outputs.RESULT }}'
-          if [ "${RESULT}" == "SUCCESS" && -f .semrelease/this_release ]; then
+          if [[ "${RESULT}" == "SUCCESS" && -f .semrelease/this_release ]]; then
             VERSION='${{ needs.ReleaseDryRun.outputs.VERSION }}'
             echo "🕘 Cleaning up file .semrelease/this_release..."
             echo "# This file has been cleaned up post-releasing version ${VERSION}." > .semrelease/this_release
@@ -253,6 +253,7 @@ jobs:
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create \
+            -t ${{ env.DOCKER_IMAGE }}:release \
             -t ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }} \
             -t ${{ env.DOCKER_IMAGE }}:latest \
             -t ${{ env.DOCKER_IMAGE }}:${{ github.sha }} \
