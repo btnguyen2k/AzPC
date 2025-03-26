@@ -73,10 +73,20 @@
 										}
 									}
 								</select>
-								<div class="d-grid">
-									<button class="btn btn-primary btn-sm" disabled="@BtnGetPricingDisabled" @onclick="()=>BtnGetPricingClicked()">
-										Get pricing for selected product &amp; region(s)
-									</button>
+								<div class="row">
+									<div class="col d-grid">
+										<button class="btn btn-primary btn-sm" disabled="@BtnGetPricingDisabled" @onclick="()=>BtnGetPricingClicked()">
+											Get pricing for selected product &amp; region(s)
+										</button>
+									</div>
+									@if (PricingList != null && PricingList.Count() > 0)
+									{
+										<div class="col-4 d-none d-md-grid">
+											<button class="btn btn-sm btn-outline-success" onclick="Table2Excel('tblPricing', 'Azure-Pricing.xls')">
+												<BIcon icon="file-earmark-spreadsheet" /> Export to Excel
+											</button>
+										</div>
+									}
 								</div>
 							</div>
 							<div class="col-sm-12 col-md-6 mb-2">
@@ -98,6 +108,14 @@
 									}
 								</select>
 							</div>
+							@if (PricingList != null && PricingList.Count() > 0)
+							{
+								<div class="col-sm-12 mb-2 d-grid d-md-none">
+									<button class="btn btn-sm btn-outline-success" onclick="Table2Excel('tblPricing', 'Azure-Pricing.xls')">
+										<BIcon icon="file-earmark-spreadsheet" /> Export to Excel
+									</button>
+								</div>
+							}
 						</div>
 						<div class="row mt-2">
 							<div class="col">
