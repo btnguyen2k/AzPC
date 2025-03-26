@@ -8,8 +8,9 @@ on:
 
 env:
   BRANCH_TO_RELEASE: 'release'
-  TAG_PREFIX: 'v'
   FILE_CHANGELOG: 'RELEASE-NOTES.md'
+  TAG_PREFIX: 'v'
+  DOCKER_IMAGE: btnguyen2k/azpc
 
 jobs:
   CallCI:
@@ -172,7 +173,7 @@ jobs:
     strategy:
       matrix:
         platforms: [ 'linux/amd64', 'linux/arm64' ]
-    name: Build Docker image(s) - Linux - Dev Branch
+    name: Build Docker image(s) - Linux - Release Branch
     env:
       VERSION: ${{ needs.Release.outputs.VERSION }}
     outputs:
