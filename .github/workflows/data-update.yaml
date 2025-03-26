@@ -2,6 +2,7 @@ name: 'Update Azure locations and product categories'
 
 on:
   workflow_call:
+
   schedule:
     # run every Saturday (UTC)
     - cron: '1 2 * * 6'
