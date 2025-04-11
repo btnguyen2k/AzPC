@@ -266,7 +266,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to demo environment
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           # note: Once login is done with azure/login action, the next set of Azure actions in the workflow can re-use the same session within the job.
           app-name: 'azpc'
