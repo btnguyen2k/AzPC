@@ -1,5 +1,11 @@
 # AzPC release notes
 
+## 2025-04-23 - v0.0.3
+
+### Added/Refactoring
+
+- Add cache to reduce roundtrips to server.
+
 ## 2025-03-26 - v0.0.2
 
 ### Added/Refactoring
