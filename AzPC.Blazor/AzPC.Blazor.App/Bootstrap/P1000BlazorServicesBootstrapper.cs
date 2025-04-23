@@ -14,7 +14,7 @@ namespace AzPC.Blazor.App.Bootstrap;
 /// Bootstrapper that registers services used by Blazor application.
 /// </summary>
 /// <remarks>
-///		Bootstrappers in Blazor.App project are shared between for Blazor Server and Blazor WASM.
+///		Bootstrappers in Blazor.App project are shared between Blazor Server and Blazor WASM.
 /// </remarks>
 [Bootstrapper]
 public class BlazorServicesBootstrapper
