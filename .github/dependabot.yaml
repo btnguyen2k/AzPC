@@ -14,7 +14,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes
@@ -24,7 +24,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes
@@ -34,7 +34,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes
@@ -44,7 +44,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes
@@ -54,7 +54,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes
@@ -64,7 +64,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-    versioning-strategy: "increase"
+    # versioning-strategy: "increase"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"] # do not update to major version as it may contain breaking changes

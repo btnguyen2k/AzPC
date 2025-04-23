@@ -1,7 +1,8 @@
 name: 'Update Azure locations and product categories'
 
 on:
-  workflow_call:
+  workflow_dispatch:
+
   schedule:
     # run every Saturday (UTC)
     - cron: '1 2 * * 6'
@@ -14,9 +15,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: dev
       - name: Update Azure locations and product categories
         run: |
-          git checkout dev
           cd AzPC.Blazor/AzPC.Blazor/config/
 
           echo "Updating Azure locations..."

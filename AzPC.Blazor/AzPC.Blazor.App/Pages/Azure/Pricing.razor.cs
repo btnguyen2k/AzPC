@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AzPC.Blazor.App.Helpers;
 using AzPC.Shared.Api;
 using AzPC.Shared.Azure;
@@ -85,11 +84,34 @@ public partial class Pricing
 			SelectedServiceFamily = string.Empty;
 			SelectedService = string.Empty;
 			SelectedProduct = string.Empty;
-			var resultProducts = await ApiClient.GetAzureProductsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
-			if (resultProducts.Status == 200)
+			var localStorage = ServiceProvider.GetRequiredService<LocalStorageHelper>();
+			var cachedProducts = await localStorage.GetItemAsync<LocalStorageEntryWithExpiry<List<AzureServiceFamily>>>("AzureProducts");
+			var ok = true;
+			if (cachedProducts != null && !cachedProducts.IsExpired && cachedProducts.Value != null)
+			{
+				ServiceFamilyList = cachedProducts.Value.OrderBy(sf => sf.Name);
+			}
+			else
+			{
+				var result = await ApiClient.GetAzureProductsAsync(await GetAuthTokenAsync(), ApiBaseUrl);
+				if (result.Status == 200)
+				{
+					ServiceFamilyList = result.Data?.OrderBy(sf => sf.Name);
+					await localStorage.SetItemAsync("AzureProducts", new LocalStorageEntryWithExpiry<List<AzureServiceFamily>>
+					{
+						Value = ServiceFamilyList?.ToList() ?? [],
+						Expiry = DateTime.Now.AddDays(1)
+					});
+				}
+				else
+				{
+					ShowAlert("danger", result.Message ?? "Unknown error");
+					ok = false;
+				}
+			}
+			if (ok)
 			{
 				HideUI = false;
-				ServiceFamilyList = resultProducts.Data?.OrderBy(sf => sf.Name);
 				ServiceMap = [];
 				ProductMap = [];
 				foreach (var serviceFamily in ServiceFamilyList!)
@@ -103,10 +125,6 @@ public partial class Pricing
 					}
 				}
 				CloseAlert();
-			}
-			else
-			{
-				ShowAlert("danger", resultProducts.Message ?? "Unknown error");
 			}
 
 			await LoadSelection();

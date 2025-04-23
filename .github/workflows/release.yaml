@@ -121,7 +121,7 @@ jobs:
       - name: Cleanup file .semrelease/this_release
         run: |
           RESULT='${{ needs.ReleaseDryRun.outputs.RESULT }}'
-          if [ "${RESULT}" == "SUCCESS" && -f .semrelease/this_release ]; then
+          if [[ "${RESULT}" == "SUCCESS" && -f .semrelease/this_release ]]; then
             VERSION='${{ needs.ReleaseDryRun.outputs.VERSION }}'
             echo "🕘 Cleaning up file .semrelease/this_release..."
             echo "# This file has been cleaned up post-releasing version ${VERSION}." > .semrelease/this_release
@@ -253,6 +253,7 @@ jobs:
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create \
+            -t ${{ env.DOCKER_IMAGE }}:release \
             -t ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }} \
             -t ${{ env.DOCKER_IMAGE }}:latest \
             -t ${{ env.DOCKER_IMAGE }}:${{ github.sha }} \
@@ -265,7 +266,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to demo environment
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           # note: Once login is done with azure/login action, the next set of Azure actions in the workflow can re-use the same session within the job.
           app-name: 'azpc'

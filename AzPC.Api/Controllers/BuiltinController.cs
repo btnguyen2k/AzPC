@@ -36,12 +36,6 @@ public class BuiltinController : ApiBaseController
 		_authenticatorAsync = authenticatorAsync;
 
 		appInfo = _conf.GetSection("App").Get<AppInfo>()!;
-		// appInfo = new AppInfo
-		// {
-		// 	Name = _conf["App:Name"] ?? "",
-		// 	Version = _conf["App:Version"] ?? "",
-		// 	Description = _conf["App:Description"] ?? "",
-		// };
 		cryptoInfo = new CryptoInfo
 		{
 			PubKey = Convert.ToBase64String(cryptoOptions.Value.RSAPubKey.ExportRSAPublicKey()),
