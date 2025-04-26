@@ -25,7 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${{ env.BRANCH_NAME }}
       - name: Update Azure locations and product categories
         run: |
           cd AzPC.Blazor/AzPC.Blazor/config/
@@ -58,7 +58,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           tag-major-release: false
           tag-minor-release: false
-          branches: ${{ github.ref_name }}
+          branches: ${{ env.BRANCH_NAME }}
           tag-prefix: ${{ env.TAG_PREFIX }}
           tag-only: true
       - name: Dummy
