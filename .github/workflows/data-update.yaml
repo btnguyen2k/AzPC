@@ -28,20 +28,23 @@ jobs:
           ref: ${{ env.BRANCH_NAME }}
       - name: Update Azure locations and product categories
         run: |
-          cd AzPC.Blazor/AzPC.Blazor/config/
+          pwd=$(pwd)
 
           echo "Updating Azure locations..."
+          cd AzPC.Blazor/AzPC.Blazor/config/
           curl https://btnguyen2k.github.io/azure-regions/locations.json -o azure-locations.json
-
           echo "Updating Azure product categories..."
           curl https://btnguyen2k.github.io/azure-regions/products.json -o azure-products.json
-
           echo $(date) > touch.txt
+
+          echo "Updating change log..."
+          cd ${pwd}
+          echo "[patch] Update Azure locations and product categories" >> ./semrelease/this_release
 
           echo "Committing changes..."
           git config --global user.email "<>"
           git config --global user.name "CI Build"
-          git add azure-locations.json azure-products.json touch.txt
+          git add .
           git commit -m "Update Azure locations and product categories"
           git push origin dev
       - name: Install Node
