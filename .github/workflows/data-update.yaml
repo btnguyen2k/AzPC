@@ -7,6 +7,11 @@ on:
     # run every Saturday (UTC)
     - cron: '1 2 * * 6'
 
+env:
+  BRANCH_NAME: dev
+  TAG_PREFIX: v
+  DOCKER_IMAGE: btnguyen2k/azpc
+
 jobs:
   update-azure-data:
     runs-on: ubuntu-latest
@@ -16,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${ env.BRANCH_NAME }
       - name: Update Azure locations and product categories
         run: |
           cd AzPC.Blazor/AzPC.Blazor/config/
@@ -47,7 +52,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${ env.BRANCH_NAME }
       - name: Setup dotnet ${{ matrix.dotnet }}
         uses: actions/setup-dotnet@v4
         with:
@@ -61,6 +66,36 @@ jobs:
       - name: Test
         run: dotnet test --no-restore
 
+  ReleaseDryRun:
+    needs: BuildAndTest
+    runs-on: ubuntu-latest
+    outputs:
+      RESULT: ${{ steps.release_dry_run.outputs.result }}
+      VERSION: ${{ steps.release_dry_run.outputs.releaseVersion }}
+      RELEASE_NOTES: ${{ steps.release_dry_run.outputs.releaseNotes }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          ref: ${ env.BRANCH_NAME }
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Release (dry-run)
+        # see https://github.com/btnguyen2k/action-semrelease for documentation
+        id: release_dry_run
+        uses: btnguyen2k/action-semrelease@v4
+        with:
+          dry-run: true
+          auto-mode: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-major-release: false
+          tag-minor-release: false
+          branches: ${{ github.ref_name }}
+          tag-prefix: ${{ env.TAG_PREFIX }}
+          tag-only: true
+
   TestDockerfileLinux:
     needs: BuildAndTest
     runs-on: ubuntu-latest
@@ -72,7 +107,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${ env.BRANCH_NAME }
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build Docker image for ${{ matrix.platforms }}
