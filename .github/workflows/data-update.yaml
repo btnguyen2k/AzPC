@@ -27,9 +27,11 @@ jobs:
           echo "Updating Azure product categories..."
           curl https://btnguyen2k.github.io/azure-regions/products.json -o azure-products.json
 
+          echo $(date) > touch.txt
+
           echo "Committing changes..."
           git config --global user.email "<>"
           git config --global user.name "CI Build"
-          git add azure-locations.json azure-products.json
+          git add azure-locations.json azure-products.json touch.txt
           git commit -m "Update Azure locations and product categories"
           git push origin dev
