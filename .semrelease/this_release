@@ -3,4 +3,3 @@
 #   git log origin..HEAD | grep "^\s" > .semrelease/this_release
 #!VERSION=0.0.4
 - [dep] Update dependencies.
-[patch] Update Azure locations and product categories
