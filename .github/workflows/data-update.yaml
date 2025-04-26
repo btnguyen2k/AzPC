@@ -25,7 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${ env.BRANCH_NAME }
+          ref: dev
       - name: Update Azure locations and product categories
         run: |
           cd AzPC.Blazor/AzPC.Blazor/config/
