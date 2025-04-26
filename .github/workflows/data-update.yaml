@@ -39,7 +39,7 @@ jobs:
 
           echo "Updating change log..."
           cd ${pwd}
-          echo "[patch] Update Azure locations and product categories" >> ./semrelease/this_release
+          echo "[patch] Update Azure locations and product categories" >> ./.semrelease/this_release
 
           echo "Committing changes..."
           git config --global user.email "<>"
