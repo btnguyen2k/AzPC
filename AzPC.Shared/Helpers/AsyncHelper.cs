@@ -15,7 +15,7 @@ public sealed class AsyncHelper
 		{
 			var finishedTask = await Task.WhenAny(tasks);
 			try { await finishedTask; }
-			catch (Exception e)
+			catch (SystemException e)
 			{
 				logger?.LogError(e, "Error executing bootstrapper task.");
 			}
