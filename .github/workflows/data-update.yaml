@@ -46,7 +46,7 @@ jobs:
           git push origin dev
 
           echo "Updating change log..."
-          echo "- [PATCH]: Update Azure locations and product categories." >> ./.semrelease/this_release
+          echo "- [PATCH]: Update Azure locations and product categories ($(date))." >> ./.semrelease/this_release
       - name: Install Node
         uses: actions/setup-node@v4
         with:
