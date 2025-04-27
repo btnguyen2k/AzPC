@@ -186,7 +186,7 @@ jobs:
             $(printf '${{ env.DOCKER_IMAGE }}@sha256:%s ' *)
       - name: Inspect image
         run: |
-          docker buildx imagetools inspect ${{ env.DOCKER_IMAGE }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
       - name: Log in to Azure
         uses: azure/login@v2
         with:

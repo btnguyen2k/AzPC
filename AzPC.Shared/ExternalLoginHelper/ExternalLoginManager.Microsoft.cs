@@ -59,7 +59,7 @@ public sealed partial class ExternalLoginManager
 		authReq.TryGetValue("redirect_uri", out var redirectUri);
 
 		var tokenResult = new ExternalLoginResult();
-		var tokenReq = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token")
+		using var tokenReq = new HttpRequestMessage(HttpMethod.Post, $"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token")
 		{
 			Content = new FormUrlEncodedContent(new Dictionary<string, string>
 			{
@@ -104,7 +104,7 @@ public sealed partial class ExternalLoginManager
 	async Task<ExternalUserProfile> GetUserProfileMicrosoftAsync(string accessToken)
 	{
 		var profileResult = new ExternalUserProfile();
-		var profileReq = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me")
+		using var profileReq = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me")
 		{
 			Headers =
 			{

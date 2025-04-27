@@ -7,29 +7,190 @@ on:
     # run every Saturday (UTC)
     - cron: '1 2 * * 6'
 
+env:
+  BRANCH_NAME: dev
+  TAG_PREFIX: v
+  DOCKER_IMAGE: btnguyen2k/azpc
+
 jobs:
-  update-azure-data:
+  UpdateAzureData:
     runs-on: ubuntu-latest
     permissions:
       contents: write # to be able to publish a GitHub release
+    outputs:
+      RESULT: ${{ steps.release_dry_run.outputs.result }}
+      VERSION: ${{ steps.release_dry_run.outputs.releaseVersion }}
+      RELEASE_NOTES: ${{ steps.release_dry_run.outputs.releaseNotes }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${{ env.BRANCH_NAME }}
       - name: Update Azure locations and product categories
         run: |
-          cd AzPC.Blazor/AzPC.Blazor/config/
+          pwd=$(pwd)
 
           echo "Updating Azure locations..."
+          cd AzPC.Blazor/AzPC.Blazor/config/
           curl https://btnguyen2k.github.io/azure-regions/locations.json -o azure-locations.json
-
           echo "Updating Azure product categories..."
           curl https://btnguyen2k.github.io/azure-regions/products.json -o azure-products.json
+          echo $(date) > touch.txt
 
           echo "Committing changes..."
+          cd ${pwd}
           git config --global user.email "<>"
           git config --global user.name "CI Build"
-          git add azure-locations.json azure-products.json
+          git add .
           git commit -m "Update Azure locations and product categories"
           git push origin dev
+
+          echo "Updating change log..."
+          echo "- [PATCH]: Update Azure locations and product categories ($(date))." >> ./.semrelease/this_release
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Release (dry-run)
+        # see https://github.com/btnguyen2k/action-semrelease for documentation
+        id: release_dry_run
+        uses: btnguyen2k/action-semrelease@v4
+        with:
+          dry-run: true
+          auto-mode: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          tag-major-release: false
+          tag-minor-release: false
+          branches: ${{ env.BRANCH_NAME }}
+          tag-prefix: ${{ env.TAG_PREFIX }}
+          tag-only: true
+
+  TestDockerfileLinux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ 'linux/amd64', 'linux/arm64' ]
+    name: Test building Docker image(s) for Linux
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image for ${{ matrix.platforms }}
+        uses: docker/build-push-action@v6
+        with:
+          platforms: ${{ matrix.platforms }}
+          push: false
+          tags: test
+          file: ./Dockerfile
+          context: ./
+
+  PublishDockerImagesLinuxBuild:
+    if: needs.UpdateAzureData.outputs.RESULT == 'SUCCESS'
+    needs: [UpdateAzureData, TestDockerfileLinux]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platforms: [ 'linux/amd64', 'linux/arm64' ]
+    name: Build Docker image(s) - Linux - Dev Branch
+    env:
+      VERSION: ${{ needs.UpdateAzureData.outputs.VERSION }}
+    outputs:
+      VERSION: ${{ needs.UpdateAzureData.outputs.VERSION }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+      - name: Update version metadata
+        run: |
+          DATE=`date +%Y%m%d%H%M%S`
+          sed -i -E "s/^(\s*\"Version\"\s*:\s*)\"[^\"]+\"/\1\"${{ env.VERSION }}-${DATE}\"/" AzPC.Api/appsettings.json
+          sed -i -E "s/^(\s*\"Version\"\s*:\s*)\"[^\"]+\"/\1\"${{ env.VERSION }}-${DATE}\"/" AzPC.Blazor/AzPC.Blazor/appsettings.json
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PAT }}
+      - name: Prepare
+        run: |
+          platform=${{ matrix.platforms }}
+          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_IMAGE }}
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          platforms: ${{ matrix.platforms }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.DOCKER_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          file: ./Dockerfile.dev
+          context: ./
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digests-${{ env.PLATFORM_PAIR }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  PublishDockerImagesLinuxMerge:
+    runs-on: ubuntu-latest
+    needs: PublishDockerImagesLinuxBuild
+    name: Merge & Publish Docker image(s) - Linux
+    env:
+      VERSION: ${{ needs.PublishDockerImagesLinuxBuild.outputs.VERSION }}
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digests-*
+          merge-multiple: true
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_IMAGE }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PAT }}
+      - name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          docker buildx imagetools create \
+            -t ${{ env.DOCKER_IMAGE }}:dev \
+            -t ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}-dev \
+            -t ${{ env.DOCKER_IMAGE }}:latest \
+            -t ${{ env.DOCKER_IMAGE }}:${{ github.sha }} \
+            $(printf '${{ env.DOCKER_IMAGE }}@sha256:%s ' *)
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to demo environment
+        uses: azure/webapps-deploy@v3
+        with:
+          # note: Once login is done with azure/login action, the next set of Azure actions in the workflow can re-use the same session within the job.
+          app-name: 'azpc'
+          images: docker.io/${{ env.DOCKER_IMAGE }}:${{ github.sha }}

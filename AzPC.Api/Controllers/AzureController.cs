@@ -82,17 +82,29 @@ public class AzureController(HttpClient httpClient) : ApiBaseController
 		{
 			var apiUrl = baseApiUrl.Replace("{product-id}", product, StringComparison.Ordinal);
 			var priceItems = AzureUtils.GetRetailPriceAsync(httpClient, apiUrl).Result;
-			foreach (var item in priceItems)
-			{
-				if (!req.Regions.Contains(item.ArmRegionName)) continue;
-				var key = new PSM(item);
-				if (!pricingPerRegionMap.TryGetValue(key, out var regionPricing))
+			priceItems.Where(item => req.Regions.Contains(item.ArmRegionName))
+				.ToList()
+				.ForEach(item =>
 				{
-					regionPricing = new Dictionary<string, AzurePriceItem>();
-					pricingPerRegionMap[key] = regionPricing;
-				}
-				regionPricing[item.ArmRegionName] = item;
-			}
+					var key = new PSM(item);
+					if (!pricingPerRegionMap.TryGetValue(key, out var regionPricing))
+					{
+						regionPricing = new Dictionary<string, AzurePriceItem>();
+						pricingPerRegionMap[key] = regionPricing;
+					}
+					regionPricing[item.ArmRegionName] = item;
+				});
+			// foreach (var item in priceItems)
+			// {
+			// 	if (!req.Regions.Contains(item.ArmRegionName)) continue;
+			// 	var key = new PSM(item);
+			// 	if (!pricingPerRegionMap.TryGetValue(key, out var regionPricing))
+			// 	{
+			// 		regionPricing = new Dictionary<string, AzurePriceItem>();
+			// 		pricingPerRegionMap[key] = regionPricing;
+			// 	}
+			// 	regionPricing[item.ArmRegionName] = item;
+			// }
 		}
 
 		var result = new List<AzurePricingPerRegion>();
