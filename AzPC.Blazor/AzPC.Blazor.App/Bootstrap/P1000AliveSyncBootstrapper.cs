@@ -82,7 +82,7 @@ public abstract class BackgroundTimerService : IDisposable
 			{
 				DoWork(state);
 			}
-			catch (Exception ex)
+			catch (SystemException ex)
 			{
 				logger.LogError(ex, "Error doing work: {message}", ex.Message);
 			}

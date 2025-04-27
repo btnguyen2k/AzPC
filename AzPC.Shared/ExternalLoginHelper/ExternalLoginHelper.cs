@@ -23,26 +23,24 @@ public sealed class ExternalLoginProviderConfig : Dictionary<string, string>
 	public ExternalLoginProviderConfig(string providerName, IConfigurationSection config)
 	{
 		ProviderName = providerName;
-		foreach (var conf in config.GetChildren())
-		{
-			if (conf.Value != null)
-			{
-				this[conf.Key] = conf.Value;
-			}
-		}
+		config.GetChildren()
+			.Where(c => c.Value != null)
+			.ToList()
+			.ForEach(c => this[c.Key] = c.Value!);
+		// foreach (var conf in config.GetChildren())
+		// {
+		// 	if (conf.Value != null)
+		// 	{
+		// 		this[conf.Key] = conf.Value;
+		// 	}
+		// }
 	}
 
 	public string ProviderName { get; internal set; } = default!;
 
 	public bool TryGetValueAsBool(string key, out bool value)
 	{
-		if (TryGetValue(key, out var val))
-		{
-			if (bool.TryParse(val, out value))
-			{
-				return true;
-			}
-		}
+		if (TryGetValue(key, out var val) && bool.TryParse(val, out value)) return true;
 		value = false;
 		return false;
 	}
