@@ -1,5 +1,11 @@
 # AzPC release notes
 
+## 2025-04-27 - v0.0.4
+
+### Fixed/Improvements
+
+- [FIXED] CodeQL warnings.
+
 ## 2025-04-23 - v0.0.3
 
 ### Added/Refactoring
