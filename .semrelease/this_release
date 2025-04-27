@@ -2,7 +2,3 @@
 # Generate its content quickly using the following command:
 #   git log origin..HEAD | grep "^\s" > .semrelease/this_release
 #!VERSION=0.0.4
-- [dep] Update dependencies.
-[patch] Update Azure locations and product categories
-- [patch] Update Azure locations and product categories.
-- [PATCH]: Update Azure locations and product categories.
