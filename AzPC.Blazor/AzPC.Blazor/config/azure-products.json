@@ -1794,11 +1794,11 @@
             "sku_name": "gpt 4o 1120 Batch Outp glbl",
             "meter_name": "gpt 4o 1120 Batch Outp glbl Tokens"
           },
-          "DZH318Z0HHG7/Assistants-Code-Interpreter-regnl EP/Assistants-Code-Interpreter-regnl EP Session": {
+          "DZH318Z0HHG7/Code-Interpreter-regnl EP/Code-Interpreter-regnl EP Session": {
             "id": "DZH318Z0HHG7",
             "name": "Azure OpenAI",
-            "sku_name": "Assistants-Code-Interpreter-regnl EP",
-            "meter_name": "Assistants-Code-Interpreter-regnl EP Session"
+            "sku_name": "Code-Interpreter-regnl EP",
+            "meter_name": "Code-Interpreter-regnl EP Session"
           },
           "DZH318Z0HHG7/Speech-to-Text-Batch-Whisper-regnl/Speech-to-Text-Batch-Whisper-regnl Unit": {
             "id": "DZH318Z0HHG7",
@@ -1860,11 +1860,11 @@
             "sku_name": "gpt 4o 0513 Output global",
             "meter_name": "gpt 4o 0513 Output global Tokens"
           },
-          "DZH318Z0HHG7/Assistants-Code-Interpreter-global/Assistants-Code-Interpreter-global Session": {
+          "DZH318Z0HHG7/Code-Interpreter-global/Code-Interpreter-global Session": {
             "id": "DZH318Z0HHG7",
             "name": "Azure OpenAI",
-            "sku_name": "Assistants-Code-Interpreter-global",
-            "meter_name": "Assistants-Code-Interpreter-global Session"
+            "sku_name": "Code-Interpreter-global",
+            "meter_name": "Code-Interpreter-global Session"
           },
           "DZH318Z0HHG7/gpt 4.5 0227 Batch Inp glbl/gpt 4.5 0227 Batch Inp glbl Tokens": {
             "id": "DZH318Z0HHG7",
@@ -4260,6 +4260,18 @@
             "sku_name": "Commitment Tier Summarization 3M",
             "meter_name": "Commitment Tier Summarization 3M Unit"
           },
+          "DZH318Z0T879/Grok-4 Outp glbl/Grok-4 Outp glbl Tokens": {
+            "id": "DZH318Z0T879",
+            "name": "Grok model family",
+            "sku_name": "Grok-4 Outp glbl",
+            "meter_name": "Grok-4 Outp glbl Tokens"
+          },
+          "DZH318Z0T879/Grok-4 Inp glbl/Grok-4 Inp glbl Tokens": {
+            "id": "DZH318Z0T879",
+            "name": "Grok model family",
+            "sku_name": "Grok-4 Inp glbl",
+            "meter_name": "Grok-4 Inp glbl Tokens"
+          },
           "DZH318Z09WSQ/Commitment Tier Summarization 10M/Commitment Tier Summarization 10M Unit": {
             "id": "DZH318Z09WSQ",
             "name": "Language - disconnected",
@@ -5394,6 +5406,12 @@
             "sku_name": "gpt4omini-rt-aud1217 Inp DZone",
             "meter_name": "gpt4omini-rt-aud1217 Inp DZone Tokens"
           },
+          "DZH318Z0TPCM/Doc AI regnl 2505/Doc AI regnl 2505 Pages": {
+            "id": "DZH318Z0TPCM",
+            "name": "Mistral Models",
+            "sku_name": "Doc AI regnl 2505",
+            "meter_name": "Doc AI regnl 2505 Pages"
+          },
           "DZH318Z0HHG7/Image-DALL-E-2-glbl/Image-DALL-E-2-glbl Images": {
             "id": "DZH318Z0HHG7",
             "name": "Azure OpenAI",
@@ -5694,6 +5712,12 @@
             "sku_name": "gpt4omini-rt-txt1217 cchd Inp DZn",
             "meter_name": "gpt4omini-rt-txt1217 cchd Inp DZn Tokens"
           },
+          "DZH318Z0T879/Grok-4 Outp DZone/Grok-4 Outp DZone Tokens": {
+            "id": "DZH318Z0T879",
+            "name": "Grok model family",
+            "sku_name": "Grok-4 Outp DZone",
+            "meter_name": "Grok-4 Outp DZone Tokens"
+          },
           "DZH318Z0HHG7/gpt 4o 0513 Batch Outp Data Zone/gpt 4o 0513 Batch Outp Data Zone Tokens": {
             "id": "DZH318Z0HHG7",
             "name": "Azure OpenAI",
@@ -5759,6 +5783,12 @@
             "name": "Azure OpenAI",
             "sku_name": "gpt-4o-rt-txt-0603 Inp DZone",
             "meter_name": "gpt-4o-rt-txt-0603 Inp DZone Tokens"
+          },
+          "DZH318Z0T879/Grok-4 Inp DZone/Grok-4 Inp DZone Tokens": {
+            "id": "DZH318Z0T879",
+            "name": "Grok model family",
+            "sku_name": "Grok-4 Inp DZone",
+            "meter_name": "Grok-4 Inp DZone Tokens"
           },
           "DZH318Z0HHG7/gpt4o realtimePrvwAudInp DataZone/gpt4o realtimePrvwAudInp DataZone Tokens": {
             "id": "DZH318Z0HHG7",
@@ -6060,11 +6090,23 @@
             "sku_name": "gpt-4o-rt-aud-1217 cchd Inp DZn",
             "meter_name": "gpt-4o-rt-aud-1217 cchd Inp DZn Tokens"
           },
+          "DZH318Z0TPCM/Doc AI glbl 2505/Doc AI glbl 2505 Pages": {
+            "id": "DZH318Z0TPCM",
+            "name": "Mistral Models",
+            "sku_name": "Doc AI glbl 2505",
+            "meter_name": "Doc AI glbl 2505 Pages"
+          },
           "DZH318Z0HHG7/gpt-4o-mini-transcribe-txt-inp-dz/gpt-4o-mini-transcribe-txt-inp-dz Tokens": {
             "id": "DZH318Z0HHG7",
             "name": "Azure OpenAI",
             "sku_name": "gpt-4o-mini-transcribe-txt-inp-dz",
             "meter_name": "gpt-4o-mini-transcribe-txt-inp-dz Tokens"
+          },
+          "DZH318Z0TPCM/Doc AI DZone 2505/Doc AI DZone 2505 Pages": {
+            "id": "DZH318Z0TPCM",
+            "name": "Mistral Models",
+            "sku_name": "Doc AI DZone 2505",
+            "meter_name": "Doc AI DZone 2505 Pages"
           },
           "DZH318Z0TDSR/codex mini out dzone/codex mini out dzone Tokens": {
             "id": "DZH318Z0TDSR",
@@ -79594,11 +79636,11 @@
         "id": "DZH3155G7B5D",
         "name": "Backup",
         "products": {
-          "DZH318Z0BP05/Azure Data Lake Storage Gen2 Vaulted backup/Azure Data Lake Storage Gen2 Vaulted backup Protected Instances": {
+          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted Protected Instances": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Data Lake Storage Gen2 Vaulted backup",
-            "meter_name": "Azure Data Lake Storage Gen2 Vaulted backup Protected Instances"
+            "sku_name": "ADLS Gen2 Vaulted",
+            "meter_name": "ADLS Gen2 Vaulted Protected Instances"
           },
           "DZH318Z0BP05/SAP ASE on Azure VM/SAP ASE on Azure VM Protected Instances": {
             "id": "DZH318Z0BP05",
@@ -79606,28 +79648,28 @@
             "sku_name": "SAP ASE on Azure VM",
             "meter_name": "SAP ASE on Azure VM Protected Instances"
           },
-          "DZH318Z0BP05/Azure Files Vaulted Backup/LRS Data Stored": {
+          "DZH318Z0BP05/Azure Files Vaulted/LRS Data Stored": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Files Vaulted Backup",
+            "sku_name": "Azure Files Vaulted",
             "meter_name": "LRS Data Stored"
           },
-          "DZH318Z0BP05/Azure Data Lake Storage Gen2 Vaulted backup/Azure Data Lake Storage Gen2 Vaulted backup LRS Write Operations": {
+          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted LRS Write Operations": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Data Lake Storage Gen2 Vaulted backup",
-            "meter_name": "Azure Data Lake Storage Gen2 Vaulted backup LRS Write Operations"
+            "sku_name": "ADLS Gen2 Vaulted",
+            "meter_name": "ADLS Gen2 Vaulted LRS Write Operations"
           },
-          "DZH318Z0BP05/Backup for PostgreSQL/Backup for PostgreSQL Protected Instances": {
+          "DZH318Z0BP05/PostgreSQL/PostgreSQL Protected Instances": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Backup for PostgreSQL",
-            "meter_name": "Backup for PostgreSQL Protected Instances"
+            "sku_name": "PostgreSQL",
+            "meter_name": "PostgreSQL Protected Instances"
           },
-          "DZH318Z0BP05/Azure Files Vaulted Backup/ZRS Data Stored": {
+          "DZH318Z0BP05/Azure Files Vaulted/ZRS Data Stored": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Files Vaulted Backup",
+            "sku_name": "Azure Files Vaulted",
             "meter_name": "ZRS Data Stored"
           },
           "DZH318Z0BP05/SQL Server in Azure VM/SQL Server in Azure VM Protected Instances": {
@@ -79654,17 +79696,17 @@
             "sku_name": "Archive",
             "meter_name": "Archive LRS Data Stored"
           },
-          "DZH318Z0BP05/Azure Files Vaulted Backup/Azure Files Vaulted Backup Protected Instances": {
+          "DZH318Z0BP05/Azure Files Vaulted/Azure Files Vaulted Protected Instances": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Files Vaulted Backup",
-            "meter_name": "Azure Files Vaulted Backup Protected Instances"
+            "sku_name": "Azure Files Vaulted",
+            "meter_name": "Azure Files Vaulted Protected Instances"
           },
-          "DZH318Z0BP05/Azure Data Lake Storage Gen2 Vaulted backup/Azure Data Lake Storage Gen2 Vaulted backup GRS Write Operations": {
+          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted GRS Write Operations": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Data Lake Storage Gen2 Vaulted backup",
-            "meter_name": "Azure Data Lake Storage Gen2 Vaulted backup GRS Write Operations"
+            "sku_name": "ADLS Gen2 Vaulted",
+            "meter_name": "ADLS Gen2 Vaulted GRS Write Operations"
           },
           "DZH318Z0BP05/Azure Files/Azure Files Protected Instances": {
             "id": "DZH318Z0BP05",
@@ -79690,10 +79732,10 @@
             "sku_name": "Azure Blob",
             "meter_name": "Azure Blob Protected Instances"
           },
-          "DZH318Z0BP05/Azure Files Vaulted Backup/GRS Data Stored": {
+          "DZH318Z0BP05/Azure Files Vaulted/GRS Data Stored": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Files Vaulted Backup",
+            "sku_name": "Azure Files Vaulted",
             "meter_name": "GRS Data Stored"
           },
           "DZH318Z0BP05/Standard/ZRS Data Stored": {
@@ -79714,10 +79756,10 @@
             "sku_name": "Archive",
             "meter_name": "Archive LRS Early Delete"
           },
-          "DZH318Z0BP05/Azure Files Vaulted Backup/RA-GRS Data Stored": {
+          "DZH318Z0BP05/Azure Files Vaulted/RA-GRS Data Stored": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Files Vaulted Backup",
+            "sku_name": "Azure Files Vaulted",
             "meter_name": "RA-GRS Data Stored"
           },
           "DZH318Z0BP05/Azure Blob/Azure Blob GRS Write Operations": {
@@ -79732,11 +79774,11 @@
             "sku_name": "Azure Blob",
             "meter_name": "Azure Blob LRS Write Operations"
           },
-          "DZH318Z0BP05/Azure Data Lake Storage Gen2 Vaulted backup/Azure Data Lake Storage Gen2 Vaulted backup ZRS Write Operations": {
+          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted ZRS Write Operations": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
-            "sku_name": "Azure Data Lake Storage Gen2 Vaulted backup",
-            "meter_name": "Azure Data Lake Storage Gen2 Vaulted backup ZRS Write Operations"
+            "sku_name": "ADLS Gen2 Vaulted",
+            "meter_name": "ADLS Gen2 Vaulted ZRS Write Operations"
           },
           "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted RA-GRS Write Operations": {
             "id": "DZH318Z0BP05",
@@ -79750,47 +79792,11 @@
             "sku_name": "Archive",
             "meter_name": "Archive GRS Early Delete"
           },
-          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted Protected Instances": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "ADLS Gen2 Vaulted",
-            "meter_name": "ADLS Gen2 Vaulted Protected Instances"
-          },
-          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted GRS Write Operations": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "ADLS Gen2 Vaulted",
-            "meter_name": "ADLS Gen2 Vaulted GRS Write Operations"
-          },
           "DZH318Z0BP05/SAP HANA on Azure VM/SAP HANA on Azure VM Snapshot Instance": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
             "sku_name": "SAP HANA on Azure VM",
             "meter_name": "SAP HANA on Azure VM Snapshot Instance"
-          },
-          "DZH318Z0BP05/Azure Files Vaulted/LRS Data Stored": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Files Vaulted",
-            "meter_name": "LRS Data Stored"
-          },
-          "DZH318Z0BP05/Azure Files Vaulted/RA-GRS Data Stored": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Files Vaulted",
-            "meter_name": "RA-GRS Data Stored"
-          },
-          "DZH318Z0BP05/Azure Files Vaulted/ZRS Data Stored": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Files Vaulted",
-            "meter_name": "ZRS Data Stored"
-          },
-          "DZH318Z0BP05/Azure Files Vaulted/Azure Files Vaulted Protected Instances": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Files Vaulted",
-            "meter_name": "Azure Files Vaulted Protected Instances"
           },
           "DZH318Z0BP05/AKS/AKS Namespace": {
             "id": "DZH318Z0BP05",
@@ -79804,18 +79810,6 @@
             "sku_name": "Standard",
             "meter_name": "GRS Data Stored"
           },
-          "DZH318Z0BP05/Azure Files Vaulted/GRS Data Stored": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Files Vaulted",
-            "meter_name": "GRS Data Stored"
-          },
-          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted ZRS Write Operations": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "ADLS Gen2 Vaulted",
-            "meter_name": "ADLS Gen2 Vaulted ZRS Write Operations"
-          },
           "DZH318Z0BP05/Archive/Archive GRS Data Stored": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
@@ -79828,12 +79822,6 @@
             "sku_name": "Azure Blob",
             "meter_name": "Azure Blob RA-GRS Write Operations"
           },
-          "DZH318Z0BP05/PostgreSQL/PostgreSQL Protected Instances": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "PostgreSQL",
-            "meter_name": "PostgreSQL Protected Instances"
-          },
           "DZH318Z0BP05/Azure Kubernetes/Azure Kubernetes Protected Instances": {
             "id": "DZH318Z0BP05",
             "name": "Backup",
@@ -79845,24 +79833,6 @@
             "name": "Backup",
             "sku_name": "Standard",
             "meter_name": "RA-GRS Data Stored"
-          },
-          "DZH318Z0BP05/ADLS Gen2 Vaulted/ADLS Gen2 Vaulted LRS Write Operations": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "ADLS Gen2 Vaulted",
-            "meter_name": "ADLS Gen2 Vaulted LRS Write Operations"
-          },
-          "DZH318Z0BP05/Azure Data Lake Storage Gen2 Vaulted backup/Azure Data Lake Storage Gen2 Vaulted backup RA-GRS Write Operations": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "Azure Data Lake Storage Gen2 Vaulted backup",
-            "meter_name": "Azure Data Lake Storage Gen2 Vaulted backup RA-GRS Write Operations"
-          },
-          "DZH318Z0BP05/AKS Backup/AKS Backup Protected Instances": {
-            "id": "DZH318Z0BP05",
-            "name": "Backup",
-            "sku_name": "AKS Backup",
-            "meter_name": "AKS Backup Protected Instances"
           }
         }
       },
