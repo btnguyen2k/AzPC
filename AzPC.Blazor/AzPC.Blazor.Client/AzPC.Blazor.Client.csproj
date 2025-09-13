@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="8.0.20" />
+    <PackageReference Include="Microsoft.NET.Sdk.WebAssembly.Pack" Version="9.0.9" />
     <ProjectReference Include="..\..\AzPC.Shared\AzPC.Shared.csproj" />
     <ProjectReference Include="..\AzPC.Blazor.App\AzPC.Blazor.App.csproj" />
     <ProjectReference Include="..\..\AzPC.Libs\AzPC.Libs.csproj" />
