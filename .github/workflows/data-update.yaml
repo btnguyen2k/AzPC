@@ -23,7 +23,7 @@ jobs:
       RELEASE_NOTES: ${{ steps.release_dry_run.outputs.releaseNotes }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.BRANCH_NAME }}
       - name: Update Azure locations and product categories
@@ -73,7 +73,7 @@ jobs:
     name: Test building Docker image(s) for Linux
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.BRANCH_NAME }}
       - name: Set up Docker Buildx
@@ -101,7 +101,7 @@ jobs:
       VERSION: ${{ needs.UpdateAzureData.outputs.VERSION }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.BRANCH_NAME }}
       - name: Update version metadata
