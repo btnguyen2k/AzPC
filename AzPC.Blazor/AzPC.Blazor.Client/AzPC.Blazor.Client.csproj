@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="8.0.22" />
+    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="8.0.23" />
     <ProjectReference Include="..\..\AzPC.Shared\AzPC.Shared.csproj" />
     <ProjectReference Include="..\AzPC.Blazor.App\AzPC.Blazor.App.csproj" />
     <ProjectReference Include="..\..\AzPC.Libs\AzPC.Libs.csproj" />
